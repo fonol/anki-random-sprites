@@ -23,13 +23,11 @@ import aqt
 from aqt.utils import showInfo, tooltip
 import os
 import re
-from shutil import copyfile
 import typing
-from typing import Dict, Any, List, Tuple, Optional, Callable
-import sys
 
 def init_addon():
-    # add action to Tools menu
+    """ Add action to "Tools" menu and register hook to check for _procgen.js file. """
+
     tools_item = QAction("Random Sprites", mw)
     tools_item.triggered.connect(open_main_dialog)
     mw.form.menuTools.addAction(tools_item)
@@ -38,33 +36,33 @@ def init_addon():
 
 
 def after_collection_did_load(col: "Collection"):
-    """ Check if add-on js file is in media folder. """
+    """ Check if add-on js file is in media folder, if not, insert it. """
 
     if not mw.col.media.have("_procgen.js"):
         mw.col.media.addFile(addon_folder() + "_procgen.js")
 
 def open_main_dialog():
-    """ Open the info dialog. """
+    """ Open the add-on's info dialog. """
 
     InfoDialog(mw)
 
 def addon_folder() -> str:
     """ Absolute path to add-on folder. """
+
     dir = os.path.dirname(os.path.realpath(__file__)).replace("\\", "/")
     if not dir.endswith("/"):
         return dir + "/"
     return dir
-
-
-
 
 class InfoDialog(QDialog):
     """ Can be opened in the Tools menu, displays some help. """
 
     def __init__(self, parent):
         QDialog.__init__(self, parent, Qt.WindowSystemMenuHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint)
+
         self.mw         = aqt.mw
         self.parent     = parent
+
         self.setup_ui()
         self.setWindowTitle("Random Sprites - Info")
 
@@ -90,7 +88,6 @@ class InfoDialog(QDialog):
         replace_btn = QPushButton("Replace Script")
         replace_btn.clicked.connect(self.replace_js_file)
         hbox.addStretch(1)
-        # hbox.addWidget(QLabel("Delete and reinsert _procgen.js in the media folder:"))
         hbox.addWidget(replace_btn)
         layout.addLayout(hbox)
 
@@ -183,5 +180,6 @@ document.body.appendChild(procgen_js);
         os.remove(addon_folder() + "_procgen.js")
         os.rename(addon_folder() + "_procgen_orig.js", addon_folder() + "_procgen.js")
         tooltip(f"Replaced file in media folder.<br>SCALE = {scale}, USE_ANIMATION = {use_animation}")
+
 
 init_addon()
