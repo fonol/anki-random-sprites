@@ -376,7 +376,7 @@
         printToCanvas(canvasId, effects) {
             const scale_sqrt        = Math.round(Math.sqrt(SCALE));
             let map                 = this.scaledMap(this.mapRBGValues, scale_sqrt);
-            const baseEffectDice    = 7;
+            const baseEffectDice    = 13;
 
             if (effects) {
                 let actions = [];
@@ -398,11 +398,23 @@
                 if (roll(baseEffectDice)) {
                     actions.push(this.invertColors.bind(this));
                 }
-                if (roll(4)) {
+                if (roll(baseEffectDice)) {
+                    actions.push(this.canvasTexture.bind(this));
+                }
+                if (roll(6)) {
                     actions.push(this.smoothenEdges.bind(this));
                 }
-                if (roll(4)) {
+                if (roll(6)) {
                     actions.push(this.edgeInterpolate.bind(this));
+                }
+                if (roll(6)) {
+                    actions.push(this.replaceBlack.bind(this));
+                }
+                if (roll(baseEffectDice)) {
+                    actions.push(this.pattern_1.bind(this));
+                }
+                if (roll(baseEffectDice)) {
+                    actions.push(this.pattern_2.bind(this));
                 }
                 while (actions.length) {
                     let ix = _randInt(0, actions.length);
@@ -410,6 +422,7 @@
                     actions.splice(ix, 1);
                 }
             }
+
 
             map                 = this.scaledMap(map, scale_sqrt);
 
@@ -489,7 +502,7 @@
         }
         distort_2(map) {
             let updated     = copyRGBMap(map);
-            const rounds    = _randInt(5, 8);
+            const rounds    = 4;
 
             for (var round = 0; round < rounds; round++) {
                 let m = copyRGBMap(updated);
@@ -621,6 +634,132 @@
                                 c = darkenRGBA(c, 15);
                         }
                         updated[row][col] = c;
+                    }
+                }
+            }
+            return updated;
+        }
+        gradientFancy(map) {
+            let updated = copyRGBMap(map);
+            let c       = null;
+            let m       = copyRGBMap(updated);
+            let rc_0    = [_randInt(150, 200),_randInt(150, 200), _randInt(150, 200), 255];
+            let rc_1    = [_randInt(150, 200),_randInt(150, 200), _randInt(150, 200), 255];
+
+            for (var row = 0; row < m.length; row++) {
+                for (var col = 0; col < m[row].length; col++) {
+                    if (m[row][col][3] !== 0) {
+                        c = m[row][col][0] > 150 == 0 ? rc_0 : rc_1;
+                        let diff = smallestDistanceToEmptyPixel(m, row, col);
+                        if (diff !== -1) {
+                            for (var i = 0; i < Math.max(1, 20 - diff); i++)
+                                c = darkenRGBA(c, Math.min(row, m.length - row, col, m[0].length - col));
+                        }
+                        updated[row][col] = c;
+                    }
+                }
+            }
+            return updated;
+        }
+        gradientPointed(map) {
+            let updated = copyRGBMap(map);
+            let c       = null;
+            let m       = copyRGBMap(updated);
+            let rp      = _randInt(0, map.length);
+            let cp      = _randInt(0, map[0].length);
+            for (var row = 0; row < m.length; row++) {
+                for (var col = 0; col < m[row].length; col++) {
+                    if (m[row][col][3] !== 0) {
+                        c = m[row][col];
+                            for (var i = 0; i < Math.trunc(Math.sqrt(Math.pow(rp - row, 2) + Math.pow(cp - col, 2))); i++)
+                                c = darkenRGBA(c, 3);
+                        updated[row][col] = c;
+                    }
+                }
+            }
+            return updated;
+        }
+        canvasTexture(map) {
+            let updated = copyRGBMap(map);
+            let c       = null;
+            let m       = copyRGBMap(updated);
+
+            for (var row = 0; row < m.length; row++) {
+                for (var col = 0; col < m[row].length; col++) {
+                    if (m[row][col][3] !== 0) {
+                        c = m[row][col];
+                        for (var i = 0; i < _randInt(1,15); i++)
+                            if (row % 2 === 0)
+                                c = darkenRGBA(c, 5);
+                            else
+                                c = darkenRGBA(c, -5);
+                        updated[row][col] = c;
+                    }
+                }
+            }
+            return updated;
+        }
+        pattern_1(map) {
+            let updated = copyRGBMap(map);
+            let c       = null;
+            let m       = copyRGBMap(updated);
+            let rc      = _getRandomColors(1)[0];
+
+            for (var row = 0; row < m.length; row++) {
+                for (var col = 0; col < m[row].length; col++) {
+                    if (m[row][col][3] !== 0) {
+                        c = m[row][col];
+                        if ((row === m.length -1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length -1 || colorsAreEqual(c, m[row][col + 1]))) {
+                            updated[row][col] = rc;
+                        }
+                    }
+                }
+            }
+            return updated;
+        }
+        pattern_2(map) {
+            let c       = null;
+            let m       = copyRGBMap(map);
+            let rc      = _getRandomColors(1)[0];
+
+            for (var row = 0; row < m.length; row++) {
+                for (var col = 0; col < m[row].length; col++) {
+                    if (m[row][col][3] !== 0) {
+                        c = m[row][col];
+                        if ((row === m.length -1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length -1 || colorsAreEqual(c, m[row][col + 1]))) {
+                            m[row][col] = rc;
+                        }
+                    }
+                }
+            }
+            return m;
+        }
+        pattern_3(map) {
+            let m       = copyRGBMap(map);
+            let rc      = _getRandomColors(1)[0];
+
+            for (var row = 0; row < m.length; row++) {
+                for (var col = 0; col < m[row].length; col++) {
+                    if (m[row][col][3] !== 0) {
+                        // if (this.hasDifferentColorAround(map, row, col)) {
+                        let ca = this.countColorsAround(map, row, col);
+                        if (ca > 1 && ca < 4) {
+                            m[row][col] = rc;
+                        }
+                    }
+                }
+            }
+            return m;
+        }
+        replaceBlack(map) {
+            let updated = copyRGBMap(map);
+            let m       = copyRGBMap(updated);
+            let rc      = _getRandomColors(1)[0];
+            
+            for (var row = 0; row < m.length; row++) {
+                for (var col = 0; col < m[row].length; col++) {
+                    if (m[row][col][3] !== 0 && m[row][col][0] === 0 && m[row][col][1] === 0 && m[row][col][2] === 0) {
+                         updated[row][col] = rc;
                     }
                 }
             }
@@ -954,7 +1093,13 @@
     }
 
     function darkenRGBA(rgba, delta) {
-        return [Math.max(0, rgba[0] - delta), Math.max(0, rgba[1] - delta), Math.max(0, rgba[2] - delta), 255];
+        return [Math.min(Math.max(0, rgba[0] - delta), 255), Math.min(Math.max(0, rgba[1] - delta), 255), Math.min(Math.max(0, rgba[2] - delta), 255), 255];
+    }
+    function darkenRGBAAlt(rgba, delta) {
+        if (rgba[0] + rgba[1] + rgba[2] < 10) {
+            delta = Math.max(2, delta - (10 - (rgba[0] + rgba[1] + rgba[2])));
+        }
+        return [Math.min(Math.max(0, rgba[0] - delta), 255), Math.min(Math.max(0, rgba[1] - delta), 255), Math.min(Math.max(0, rgba[2] - delta), 255), 255];
     }
     function invertRGBA(rgba) {
         return [Math.max(0, 255 - rgba[0]), Math.max(0, 255 - rgba[1]), Math.max(255 - rgba[2]), 255];
