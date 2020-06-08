@@ -151,21 +151,21 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
     const template_8 = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 6, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 6, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
     const template_9 = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -404,7 +404,7 @@
                 if (roll(6)) {
                     actions.push(this.smoothenEdges.bind(this));
                 }
-                if (roll(6)) {
+                if (roll(5)) {
                     actions.push(this.edgeInterpolate.bind(this));
                 }
                 if (roll(6)) {
@@ -975,7 +975,7 @@
         temps.push(new PMapTemplate(template_5, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
         temps.push(new PMapTemplate(template_6, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
         temps.push(new PMapTemplate(template_7, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
-        temps.push(new PMapTemplate(template_8, ["fillborders", "brighten", "[coloredborder]"]));
+        temps.push(new PMapTemplate(template_8, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
         temps.push(new PMapTemplate(template_9, ["fillborders", "brighten", "[coloredborder]"]));
         temps.push(new PMapTemplate(template_10, ["fillborders", "brighten", "[coloredborder]"]));
         temps.push(new PMapTemplate(template_11, ["fillborders", "brighten", "[coloredborder]"]));
@@ -1093,12 +1093,6 @@
     }
 
     function darkenRGBA(rgba, delta) {
-        return [Math.min(Math.max(0, rgba[0] - delta), 255), Math.min(Math.max(0, rgba[1] - delta), 255), Math.min(Math.max(0, rgba[2] - delta), 255), 255];
-    }
-    function darkenRGBAAlt(rgba, delta) {
-        if (rgba[0] + rgba[1] + rgba[2] < 10) {
-            delta = Math.max(2, delta - (10 - (rgba[0] + rgba[1] + rgba[2])));
-        }
         return [Math.min(Math.max(0, rgba[0] - delta), 255), Math.min(Math.max(0, rgba[1] - delta), 255), Math.min(Math.max(0, rgba[2] - delta), 255), 255];
     }
     function invertRGBA(rgba) {
