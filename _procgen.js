@@ -188,14 +188,14 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -376,46 +376,26 @@
         printToCanvas(canvasId, effects) {
             const scale_sqrt        = Math.round(Math.sqrt(SCALE));
             let map                 = this.scaledMap(this.mapRBGValues, scale_sqrt);
-            const baseEffectDice    = 13;
+            const baseEffectDice    = 7;
 
             if (effects) {
                 let actions = [];
-                if (roll(baseEffectDice)) {
-                    actions.push(this.distort_1.bind(this));
-                }
-                if (roll(baseEffectDice)) {
-                    actions.push(this.distort_2.bind(this));
-                }
-                if (roll(baseEffectDice)) {
-                    actions.push(this.distort_4.bind(this));
-                }
-                if (roll(baseEffectDice)) {
-                    actions.push(this.averageColors.bind(this));
-                }
-                if (roll(baseEffectDice)) {
-                    actions.push(this.gradient.bind(this));
-                }
-                if (roll(baseEffectDice)) {
-                    actions.push(this.invertColors.bind(this));
-                }
-                if (roll(baseEffectDice)) {
-                    actions.push(this.canvasTexture.bind(this));
-                }
-                if (roll(6)) {
-                    actions.push(this.smoothenEdges.bind(this));
-                }
-                if (roll(5)) {
-                    actions.push(this.edgeInterpolate.bind(this));
-                }
-                if (roll(6)) {
-                    actions.push(this.replaceBlack.bind(this));
-                }
-                if (roll(baseEffectDice)) {
-                    actions.push(this.pattern_1.bind(this));
-                }
-                if (roll(baseEffectDice)) {
-                    actions.push(this.pattern_2.bind(this));
-                }
+                if (roll(baseEffectDice)) { actions.push(this.distort_1.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.distort_2.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.distort_4.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.distort_5.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.distort_6.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.distort_7.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.distort_8.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.averageColors.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.gradient.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.invertColors.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.canvasTexture.bind(this)); }
+                if (roll(6)) { actions.push(this.smoothenEdges.bind(this)); }
+                if (roll(6)) { actions.push(this.edgeInterpolate.bind(this)); }
+                if (roll(6)) { actions.push(this.replaceBlack.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.pattern_1.bind(this)); }
+                if (roll(baseEffectDice)) { actions.push(this.pattern_2.bind(this)); }
                 while (actions.length) {
                     let ix = _randInt(0, actions.length);
                     map = actions[ix](map);
@@ -562,22 +542,64 @@
             return updated;
         }
         distort_5(map) {
-            let updated     = copyRGBMap(map);
-            const rounds    = _randInt(1, 2);
-
-            for (var round = 0; round < rounds; round++) {
-                let m = copyRGBMap(updated);
-                for (var row = 0; row < m.length; row++) {
-                    for (var col = 0; col < m[row].length; col++) {
-                        if (this.isEmpty(m[row][col])) {
-                            continue;
-                        }
-                        if (this.hasDifferentColorAround(m, row, col)) {
-                            updated[row][col] = [0, 0, 0, 0];
+            let updated = copyRGBMap(map);
+            let r = _getRandomColors(1)[0];
+            for (var row = 0; row < map.length; row++) {
+                for (var col = 0; col < map[row].length; col++) {
+                    if (this.isEmpty(map[row][col])) { continue; }
+                    let ca = this.countColorsAround(map, row, col, true);
+                    if (ca === 1) {
+                        updated[row][col] = r;
+                    } else if (ca === 3)
+                        updated[row][col] = [0, 0, 0, 0];
+                }
+            }
+            return updated;
+        }
+        distort_6(map) {
+            let updated = copyRGBMap(map);
+            let r = _getRandomColors(1)[0];
+            for (var row = 0; row < map.length; row++) {
+                for (var col = 0; col < map[row].length; col++) {
+                    if (this.isEmpty(map[row][col])) { continue; }
+                    if (this.hasDifferentColorAround(map, row, col)) {
+                        updated[row][col] = r;
+                    } else {
+                        updated[row][col] = [0, 0, 0, 0];
+                    }
+                }
+            }
+            return updated;
+        }
+        distort_7(map) {
+            let updated = copyRGBMap(map);
+            let r = _getRandomColors(20);
+            for (var round = 0; round < 1; round++) {
+                for (var row = 0; row < map.length; row++) {
+                    for (var col = 0; col < map[row].length; col++) {
+                        if (this.isEmptyOrMapEdge(map, row, col)) { continue; }
+                        let ca = smallestDistanceToEmptyPixel(map, row, col);
+                        if (ca > 0 && ca < r.length - 1) {
+                            updated[row][col] = r[ca].slice();
                         }
                     }
                 }
             }
+            return updated;
+        }
+        distort_8(map) {
+            let updated = copyRGBMap(map);
+            let r = _getRandomColors(1)[0];
+                for (var row = 0; row < map.length; row++) {
+                    for (var col = 0; col < map[row].length; col++) {
+                        if (this.isEmptyOrMapEdge(map, row, col)) { continue; }
+                        let ca = smallestDistanceToEmptyPixel(map, row, col);
+                        if (ca === 10) {
+                            updated[row][col] = r;
+                        } else if (ca === 2 || ca === 5 || ca === 8)
+                            updated[row][col] = [0,0,0,0];
+                    }
+                }
             return updated;
         }
         movePixels(map) {
@@ -851,6 +873,9 @@
         }
         isEmpty(cell) {
             return cell[0] === 0 && cell[1] === 0 && cell[2] === 0 && cell[3] === 0;
+        }
+        isEmptyOrMapEdge(map, row, col) {
+            return this.isEmpty(map[row][col]) || row === 0 || col === 0 || row === map.length - 1 || col === map[0].length - 1;
         }
         mostCommonColorAround(map, row, col) {
             let c = {};
