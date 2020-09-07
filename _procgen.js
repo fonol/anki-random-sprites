@@ -2124,11 +2124,11 @@
         let c = document.getElementById("procgen_canvas");
         c.style.textAlign = "center";
         c.innerHTML = `
-            <div style='position:relative; display: inline-block; padding: 0 25px 0 25px;'> 
-                <div style='position: absolute; right: 0; font-family: monospace; user-select: none; font-size: 20px; opacity: 0.8; line-height: 1em;'> 
-                    <a style='cursor: pointer;' onclick='scaleUp()' title='Zoom in'><b>+</b></a><br>
-                    <a style='cursor: pointer;' onclick='scaleDown()' title='Zoom out'><b>-</b></a><br>
-                    <a style='cursor: pointer;' onclick='saveProcgenCanvas()' title='Save to Image'><b>&#9113;</b></a>
+            <div style='position:relative; display: inline-block; padding: 0 35px 0 35px;'> 
+                <div style='position: absolute; right: 0; font-family: monospace; user-select: none; opacity: 0.8; line-height: 1em;'> 
+                    <a style='font-size: 17px; cursor: pointer;' onclick='scaleUp()' title='Zoom in'><b>+</b></a><br>
+                    <a style='font-size: 17px; cursor: pointer;' onclick='scaleDown()' title='Zoom out'><b>-</b></a><br>
+                    <a style='font-size: 17px; cursor: pointer;' onclick='saveProcgenCanvas()' title='Save to Image'><b>&#9113;</b></a>
                 </div>
                 <canvas id='px_canvas'></canvas>
             </div>
