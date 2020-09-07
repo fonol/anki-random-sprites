@@ -20,6 +20,8 @@
 // 4: always body
 // 5: border / empty
 // 6: random walk
+// 7: random walk, optional 
+// 8: random walk, long 
 //
 // 0: empty
 // 1: body
@@ -27,8 +29,14 @@
 
 (function () {
 
+    /** one pixel in the first generations step maps to how many canvas pixels? */
     const SCALE = 10;
-    const USE_ANIMATION = true;
+    /** Use rendering animation when generating */
+    const USE_RENDER_ANIMATION = true;
+    /** Use animated effect */
+    const USE_EFFECT_ANIMATION = true;
+    /**  Every nth time on avg., the generated image should have an animation effect */
+    const ANIMATION_CHANCE = 5;
 
     const template_1 = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -142,7 +150,7 @@
         [0, 0, 0, 0, 0, 0, 4, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 7],
         [0, 0, 0, 0, 6, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -158,7 +166,7 @@
         [0, 0, 0, 0, 0, 0, 6, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 7],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 6, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -187,17 +195,17 @@
     const template_10 = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
@@ -219,33 +227,107 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
 
+
+    const singleTemplates = [];
+
+    singleTemplates.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 6, 4, 4],
+        [0, 0, 0, 0, 0, 1, 4, 1, 1],
+        [0, 0, 0, 0, 0, 1, 4, 1, 1],
+        [0, 0, 0, 0, 0, 1, 4, 4, 4],
+        [0, 0, 0, 0, 0, 0, 0, 4, 4],
+        [0, 0, 0, 0, 6, 0, 0, 4, 4],
+        [0, 0, 0, 0, 0, 0, 4, 4, 0],
+        [0, 0, 0, 0, 0, 1, 4, 4, 1],
+        [0, 0, 0, 0, 1, 4, 4, 1, 1],
+        [0, 0, 0, 0, 1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    );
+    singleTemplates.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 6, 4, 4],
+        [0, 0, 0, 0, 0, 0, 4, 1, 1],
+        [0, 0, 0, 0, 0, 0, 4, 0, 0],
+        [0, 0, 0, 0, 6, 1, 4, 4, 4],
+        [0, 0, 0, 0, 0, 0, 0, 4, 4],
+        [0, 0, 0, 0, 6, 0, 0, 4, 4],
+        [0, 0, 0, 0, 0, 0, 4, 4, 0],
+        [0, 0, 0, 0, 0, 1, 4, 4, 1],
+        [0, 0, 0, 0, 0, 6, 4, 1, 1],
+        [0, 0, 0, 0, 0, 0, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    );
+
+    singleTemplates.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 6],
+        [0, 0, 0, 0, 0, 0, 0, 0, 8],
+        [0, 0, 0, 0, 0, 0, 0, 0, 6],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    );
+
+    singleTemplates.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 8, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 8, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    );
+
     class PMapTemplate {
-        constructor(template, pipeline) {
+        constructor(template, steps) {
             this.template = template;
-            this.pipeline = pipeline;
+            this.steps = steps;
         }
 
         generateMap() {
-            let pipeline = this.pipeline;
+            let steps = this.steps;
             let halfmap = copyMap(this.template);
-            if (!pipeline || pipeline === null) {
-                pipeline = getDefaultPipeline();
+            if (!steps || steps === null) {
+                steps = defaultSteps();
             }
             //basic map
             let mapGenerated = this.generateFillings(halfmap);
 
             //mirroring
-            if (pipeline.indexOf("mirrorquarter") !== -1) {
+            if (steps.indexOf("mirrorquarter") !== -1) {
                 mapGenerated = mirrorQuarter(mapGenerated);
             }
-            if (pipeline.indexOf("mirrorvertically") !== -1 || (pipeline.indexOf("[mirrorvertically]") !== -1 && _randInt(0, 2) === 0)) {
+            if (steps.indexOf("mirrorvertically") !== -1 || (steps.indexOf("[mirrorvertically]") !== -1 && _randInt(0, 2) === 0)) {
                 mapGenerated = mirrorVertically(mapGenerated);
             }
             //borders
-            if (pipeline.indexOf("fillborders") !== -1) {
+            if (steps.indexOf("fillborders") !== -1) {
                 mapGenerated = this.fillBorders(mapGenerated);
             }
-            return new PMap(copyMap(this.template), this.pipeline, mapGenerated);
+            return new PMap(copyMap(this.template), this.steps, mapGenerated);
         }
 
         fillBorders(map) {
@@ -272,8 +354,8 @@
             for (var row = 0; row < map.length; row++) {
                 for (var col = 0; col < map[row].length; col++) {
                     map[row][col] = rollFilling(map[row][col]);
-                    if (map[row][col] === 6) {
-                        rwalks.push([row, col]);
+                    if (map[row][col] === 6 || map[row][col] === 8) {
+                        rwalks.push([row, col, map[row][col]]);
                     }
                 }
             }
@@ -289,7 +371,8 @@
                 let n = getEmptyAround(map, w[0], w[1]);
                 let c = 0;
                 let x = null;
-                while (n.length && c < 8) {
+                let limit = w[2] === 8 ? 25 : 8;
+                while (n.length && c < limit) {
                     x = n[_randInt(0, n.length)];
                     map[x[0]][x[1]] = 1;
                     c++;
@@ -301,25 +384,24 @@
     }
 
     class PMap {
-        constructor(template, pipeline, map012) {
-            this.template               = template;
-            this.pipeline               = pipeline;
-            this.map012                 = map012;
-            this.map012Scaled           = this.scaledMap(map012, SCALE);
-            this.bodyColorRGBArray      = _getRandomColors(1)[0];
+        constructor(template, steps, map012) {
+            this.template = template;
+            this.steps = steps;
+            this.map012 = map012;
+            this.map012Scaled = this.scaledMap(map012, SCALE);
+            this.bodyColorRGBArray = _getRandomColors(1)[0];
 
-            this.brighten               = pipeline.indexOf("brighten") !== -1 || (pipeline.indexOf("[brighten]") !== -1 && roll(2));
-            this.transparentBody        = pipeline.indexOf("transparentbody") !== -1 || (pipeline.indexOf("[transparentbody]") !== -1 && roll(2));
-            this.coloredBorder          = pipeline.indexOf("coloredborder") !== -1 || (pipeline.indexOf("[coloredborder]") !== -1 && roll(2));
+            this.brighten = steps.indexOf("brighten") !== -1 || (steps.indexOf("[brighten]") !== -1 && roll(2));
+            this.coloredBorder = steps.indexOf("coloredborder") !== -1 || (steps.indexOf("[coloredborder]") !== -1 && roll(2));
 
-            this.borderColorRGBArray    = this.coloredBorder ? _getRandomColors(1)[0] : [0, 0, 0, 255];
-            this.mapRBGValues           = [];
+            this.borderColorRGBArray = this.coloredBorder ? _getRandomColors(1)[0] : [0, 0, 0, 255];
+            this.mapRBGValues = [];
 
             this.initialRGBValues();
         }
 
         initialRGBValues() {
-            let bodycolor   = this.transparentBody ? [0, 0, 0, 0] : this.borderColorRGBArray;
+            let bodycolor = this.bodyColorRGBArray;
             let bordercolor = this.borderColorRGBArray;
 
             for (var row = 0; row < this.map012.length; row++) {
@@ -328,7 +410,7 @@
                     switch (this.map012[row][col]) {
                         case 0: this.mapRBGValues[row][col] = [0, 0, 0, 0]; break;
                         case 1:
-                            if (this.brighten && !this.transparentBody) {
+                            if (this.brighten) {
                                 this.mapRBGValues[row][col] = this.maybeBrightenBodyPixel(this.map012, row, col, this.bodyColorRGBArray);
                             } else {
                                 this.mapRBGValues[row][col] = bodycolor;
@@ -361,12 +443,12 @@
         }
 
         brightenColor(color, n) {
-            let r   = color[0];
-            let g   = color[1];
-            let b   = color[2];
-            r       = Math.floor(Math.min(255, r + (255 - r) * 0.15));
-            g       = Math.floor(Math.min(255, g + (255 - g) * 0.15));
-            b       = Math.floor(Math.min(255, b + (255 - b) * 0.15));
+            let r = color[0];
+            let g = color[1];
+            let b = color[2];
+            r = Math.floor(Math.min(255, r + (255 - r) * 0.15));
+            g = Math.floor(Math.min(255, g + (255 - g) * 0.15));
+            b = Math.floor(Math.min(255, b + (255 - b) * 0.15));
             if (n === 0) {
                 return [r, g, b, 255];
             } else {
@@ -374,9 +456,9 @@
             }
         }
         printToCanvas(canvasId, effects) {
-            const scale_sqrt        = Math.round(Math.sqrt(SCALE));
-            let map                 = this.scaledMap(this.mapRBGValues, scale_sqrt);
-            const baseEffectDice    = 7;
+            const scale_sqrt = Math.round(Math.sqrt(SCALE));
+            let map = this.scaledMap(this.mapRBGValues, scale_sqrt);
+            const baseEffectDice = 7;
 
             if (effects) {
                 let actions = [];
@@ -404,17 +486,17 @@
             }
 
 
-            map                 = this.scaledMap(map, scale_sqrt);
+            map = this.scaledMap(map, scale_sqrt);
 
-            const canvas        = document.getElementById(canvasId);
-            canvas.width        = map[0].length;
-            canvas.height       = map.length;
-            canvas.style.width  = map[0].length;
-            canvas.style.height = map.length;
+            const canvas = document.getElementById(canvasId);
+            canvas.width = map[0].length;
+            canvas.height = map.length;
+            // canvas.style.width = map[0].length;
+            // canvas.style.height = map.length;
 
-            const ctx           = canvas.getContext('2d');
-            const imgData       = ctx.createImageData(canvas.width, canvas.height);
-            const data          = imgData.data;
+            const ctx = canvas.getContext('2d');
+            const imgData = ctx.createImageData(canvas.width, canvas.height);
+            const data = imgData.data;
 
             for (var row = 0; row < map.length; row++) {
                 for (var col = 0; col < map[row].length; col++) {
@@ -444,8 +526,8 @@
             return enlarged;
         }
         smoothenEdges(map) {
-            let updated     = copyRGBMap(map);
-            const rounds    = 3;
+            let updated = copyRGBMap(map);
+            const rounds = 3;
 
             for (var round = 0; round < rounds; round++) {
                 let m = copyRGBMap(updated);
@@ -458,11 +540,11 @@
             return updated;
         }
         distort_1(map) {
-            let updated     = copyRGBMap(map);
-            const rounds    = _randInt(1, 15);
-            const r4        = _randInt(0, 4);
-            const r3        = _randInt(0, 3);
-            const r2        = _randInt(0, 2);
+            let updated = copyRGBMap(map);
+            const rounds = _randInt(1, 15);
+            const r4 = _randInt(0, 4);
+            const r3 = _randInt(0, 3);
+            const r2 = _randInt(0, 2);
             for (var round = 0; round < rounds; round++) {
                 let m = copyRGBMap(updated);
                 for (var row = 0; row < m.length; row++) {
@@ -481,8 +563,8 @@
             return updated;
         }
         distort_2(map) {
-            let updated     = copyRGBMap(map);
-            const rounds    = 4;
+            let updated = copyRGBMap(map);
+            const rounds = 4;
 
             for (var round = 0; round < rounds; round++) {
                 let m = copyRGBMap(updated);
@@ -501,9 +583,9 @@
             return updated;
         }
         distort_3(map) {
-            let updated     = copyRGBMap(map);
-            const rounds    = _randInt(5, 45);
-            const r1        = _randInt(2, 4);
+            let updated = copyRGBMap(map);
+            const rounds = _randInt(5, 45);
+            const r1 = _randInt(2, 4);
 
             for (var round = 0; round < rounds; round++) {
                 let m = copyRGBMap(updated);
@@ -522,8 +604,8 @@
             return updated;
         }
         distort_4(map) {
-            let updated     = copyRGBMap(map);
-            const rounds    = _randInt(1, 10);
+            let updated = copyRGBMap(map);
+            const rounds = _randInt(1, 10);
 
             for (var round = 0; round < rounds; round++) {
                 let m = copyRGBMap(updated);
@@ -590,21 +672,21 @@
         distort_8(map) {
             let updated = copyRGBMap(map);
             let r = _getRandomColors(1)[0];
-                for (var row = 0; row < map.length; row++) {
-                    for (var col = 0; col < map[row].length; col++) {
-                        if (this.isEmptyOrMapEdge(map, row, col)) { continue; }
-                        let ca = smallestDistanceToEmptyPixel(map, row, col);
-                        if (ca === 10) {
-                            updated[row][col] = r;
-                        } else if (ca === 2 || ca === 5 || ca === 8)
-                            updated[row][col] = [0,0,0,0];
-                    }
+            for (var row = 0; row < map.length; row++) {
+                for (var col = 0; col < map[row].length; col++) {
+                    if (this.isEmptyOrMapEdge(map, row, col)) { continue; }
+                    let ca = smallestDistanceToEmptyPixel(map, row, col);
+                    if (ca === 10) {
+                        updated[row][col] = r;
+                    } else if (ca === 2 || ca === 5 || ca === 8)
+                        updated[row][col] = [0, 0, 0, 0];
                 }
+            }
             return updated;
         }
         movePixels(map) {
-            let updated     = copyRGBMap(map);
-            const rounds    = _randInt(1, 25);
+            let updated = copyRGBMap(map);
+            const rounds = _randInt(1, 25);
 
             for (var round = 0; round < rounds; round++) {
                 let m = copyRGBMap(updated);
@@ -623,9 +705,9 @@
         }
         averageColors(map) {
             let updated = copyRGBMap(map);
-            let last    = null;
-            let m       = copyRGBMap(updated);
-            let r       = _randInt(2, 5);
+            let last = null;
+            let m = copyRGBMap(updated);
+            let r = _randInt(2, 5);
 
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
@@ -643,8 +725,8 @@
         }
         gradient(map) {
             let updated = copyRGBMap(map);
-            let c       = null;
-            let m       = copyRGBMap(updated);
+            let c = null;
+            let m = copyRGBMap(updated);
 
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
@@ -663,10 +745,10 @@
         }
         gradientFancy(map) {
             let updated = copyRGBMap(map);
-            let c       = null;
-            let m       = copyRGBMap(updated);
-            let rc_0    = [_randInt(150, 200),_randInt(150, 200), _randInt(150, 200), 255];
-            let rc_1    = [_randInt(150, 200),_randInt(150, 200), _randInt(150, 200), 255];
+            let c = null;
+            let m = copyRGBMap(updated);
+            let rc_0 = [_randInt(150, 200), _randInt(150, 200), _randInt(150, 200), 255];
+            let rc_1 = [_randInt(150, 200), _randInt(150, 200), _randInt(150, 200), 255];
 
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
@@ -685,16 +767,16 @@
         }
         gradientPointed(map) {
             let updated = copyRGBMap(map);
-            let c       = null;
-            let m       = copyRGBMap(updated);
-            let rp      = _randInt(0, map.length);
-            let cp      = _randInt(0, map[0].length);
+            let c = null;
+            let m = copyRGBMap(updated);
+            let rp = _randInt(0, map.length);
+            let cp = _randInt(0, map[0].length);
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
                     if (m[row][col][3] !== 0) {
                         c = m[row][col];
-                            for (var i = 0; i < Math.trunc(Math.sqrt(Math.pow(rp - row, 2) + Math.pow(cp - col, 2))); i++)
-                                c = darkenRGBA(c, 3);
+                        for (var i = 0; i < Math.trunc(Math.sqrt(Math.pow(rp - row, 2) + Math.pow(cp - col, 2))); i++)
+                            c = darkenRGBA(c, 3);
                         updated[row][col] = c;
                     }
                 }
@@ -703,14 +785,14 @@
         }
         canvasTexture(map) {
             let updated = copyRGBMap(map);
-            let c       = null;
-            let m       = copyRGBMap(updated);
+            let c = null;
+            let m = copyRGBMap(updated);
 
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
                     if (m[row][col][3] !== 0) {
                         c = m[row][col];
-                        for (var i = 0; i < _randInt(1,15); i++)
+                        for (var i = 0; i < _randInt(1, 15); i++)
                             if (row % 2 === 0)
                                 c = darkenRGBA(c, 5);
                             else
@@ -723,15 +805,15 @@
         }
         pattern_1(map) {
             let updated = copyRGBMap(map);
-            let c       = null;
-            let m       = copyRGBMap(updated);
-            let rc      = _getRandomColors(1)[0];
+            let c = null;
+            let m = copyRGBMap(updated);
+            let rc = _getRandomColors(1)[0];
 
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
                     if (m[row][col][3] !== 0) {
                         c = m[row][col];
-                        if ((row === m.length -1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length -1 || colorsAreEqual(c, m[row][col + 1]))) {
+                        if ((row === m.length - 1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length - 1 || colorsAreEqual(c, m[row][col + 1]))) {
                             updated[row][col] = rc;
                         }
                     }
@@ -740,15 +822,15 @@
             return updated;
         }
         pattern_2(map) {
-            let c       = null;
-            let m       = copyRGBMap(map);
-            let rc      = _getRandomColors(1)[0];
+            let c = null;
+            let m = copyRGBMap(map);
+            let rc = _getRandomColors(1)[0];
 
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
                     if (m[row][col][3] !== 0) {
                         c = m[row][col];
-                        if ((row === m.length -1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length -1 || colorsAreEqual(c, m[row][col + 1]))) {
+                        if ((row === m.length - 1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length - 1 || colorsAreEqual(c, m[row][col + 1]))) {
                             m[row][col] = rc;
                         }
                     }
@@ -757,13 +839,12 @@
             return m;
         }
         pattern_3(map) {
-            let m       = copyRGBMap(map);
-            let rc      = _getRandomColors(1)[0];
+            let m = copyRGBMap(map);
+            let rc = _getRandomColors(1)[0];
 
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
                     if (m[row][col][3] !== 0) {
-                        // if (this.hasDifferentColorAround(map, row, col)) {
                         let ca = this.countColorsAround(map, row, col);
                         if (ca > 1 && ca < 4) {
                             m[row][col] = rc;
@@ -775,13 +856,13 @@
         }
         replaceBlack(map) {
             let updated = copyRGBMap(map);
-            let m       = copyRGBMap(updated);
-            let rc      = _getRandomColors(1)[0];
-            
+            let m = copyRGBMap(updated);
+            let rc = _getRandomColors(1)[0];
+
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
                     if (m[row][col][3] !== 0 && m[row][col][0] === 0 && m[row][col][1] === 0 && m[row][col][2] === 0) {
-                         updated[row][col] = rc;
+                        updated[row][col] = rc;
                     }
                 }
             }
@@ -789,7 +870,7 @@
         }
         invertColors(map) {
             let updated = copyRGBMap(map);
-            let m       = copyRGBMap(updated);
+            let m = copyRGBMap(updated);
 
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
@@ -802,7 +883,7 @@
         }
         edgeInterpolate(map) {
             let updated = copyRGBMap(map);
-            let m       = copyRGBMap(updated);
+            let m = copyRGBMap(updated);
 
             for (var row = 0; row < m.length; row++) {
                 for (var col = 0; col < m[row].length; col++) {
@@ -905,7 +986,6 @@
                 return this.averageColor(chosen.map(x => x.split(",").map(function (cs) { return Number(cs); })))
             }
             return chosen[0].split(",").map(function (cs) { return Number(cs); });
-            // return chosen[_randInt(0, chosen.length)].split(",").map(function (cs) { return Number(cs); });
         }
 
     }
@@ -951,8 +1031,8 @@
     function _randInt(start, endExclusive) {
         return Math.floor(Math.random() * (endExclusive - start)) + start;
     }
-    function getDefaultPipeline() {
-        return ["fillborders", "mirrorvertically", "brighten"];
+    function defaultSteps() {
+        return ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"];
     }
     function overlayAll(maps) {
         let current = maps[0];
@@ -990,30 +1070,40 @@
     }
 
     function generateRandom(canvasId, effects = false) {
-        let temps       = [];
-        const rounds    = _randInt(3, 9);
+        let temps = [];
+        let singles = [];
 
-        temps.push(new PMapTemplate(template_1, getDefaultPipeline()));
-        temps.push(new PMapTemplate(template_2, getDefaultPipeline()));
-        temps.push(new PMapTemplate(template_3, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
-        temps.push(new PMapTemplate(template_4, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
-        temps.push(new PMapTemplate(template_5, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
-        temps.push(new PMapTemplate(template_6, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
-        temps.push(new PMapTemplate(template_7, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
-        temps.push(new PMapTemplate(template_8, ["fillborders", "mirrorvertically", "brighten", "[coloredborder]"]));
+        temps.push(new PMapTemplate(template_1, defaultSteps()));
+        temps.push(new PMapTemplate(template_2, defaultSteps()));
+        temps.push(new PMapTemplate(template_3, defaultSteps()));
+        temps.push(new PMapTemplate(template_4, defaultSteps()));
+        temps.push(new PMapTemplate(template_5, defaultSteps()));
+        temps.push(new PMapTemplate(template_6, defaultSteps()));
+        temps.push(new PMapTemplate(template_7, defaultSteps()));
+        temps.push(new PMapTemplate(template_8, defaultSteps()));
         temps.push(new PMapTemplate(template_9, ["fillborders", "brighten", "[coloredborder]"]));
         temps.push(new PMapTemplate(template_10, ["fillborders", "brighten", "[coloredborder]"]));
         temps.push(new PMapTemplate(template_11, ["fillborders", "brighten", "[coloredborder]"]));
 
-        let maps = [];
-
-        for (var i = 0; i < rounds; i++) {
-            let chosen  = temps[_randInt(0, temps.length)];
-            let map     = chosen.generateMap();
-            maps.push(map);
+        for (let i = 0; i < singleTemplates.length; i++) {
+            singles.push(new PMapTemplate(singleTemplates[i], defaultSteps()));
         }
 
-        let fused       = overlayAll(maps);
+        let maps = [];
+
+        if (roll(2)) {
+            const rounds = _randInt(3, 8);
+            for (var i = 0; i < rounds; i++) {
+                let chosen = temps[_randInt(0, temps.length)];
+                let map = chosen.generateMap();
+                maps.push(map);
+            }
+        } else {
+            let chosen = singles[_randInt(0, singles.length)];
+            maps.push(chosen.generateMap());
+        }
+
+        let fused = overlayAll(maps);
         fused.printToCanvas(canvasId, effects)
     }
 
@@ -1056,6 +1146,12 @@
         }
         if (type === 6) {
             return 6;
+        }
+        if (type === 7) {
+            return _randInt(0, 2) === 1 ? 0 : 6;
+        }
+        if (type === 8) {
+            return 8;
         }
     }
     function roll(dice) {
@@ -1103,16 +1199,16 @@
     }
     function edgeInterpolate(map, row, col) {
         if (row - 1 >= 0 && col + 1 < map[0].length && !colorsAreClose(map[row][col], map[row - 1][col], 20) && colorsAreClose(map[row - 1][col], map[row][col + 1], 20)) {
-            return map[row- 1][col]; 
+            return map[row - 1][col];
         }
         if (row + 1 < map.length && col + 1 < map[0].length && !colorsAreClose(map[row][col], map[row + 1][col], 20) && colorsAreClose(map[row][col + 1], map[row + 1][col], 20)) {
-            return map[row + 1][col]; 
+            return map[row + 1][col];
         }
-        if (row + 1 < map.length && col - 1 >= 0 && !colorsAreClose(map[row][col], map[row + 1][col], 20)  && colorsAreClose(map[row + 1][col], map[row][col - 1], 20)) {
-            return map[row + 1][col]; 
+        if (row + 1 < map.length && col - 1 >= 0 && !colorsAreClose(map[row][col], map[row + 1][col], 20) && colorsAreClose(map[row + 1][col], map[row][col - 1], 20)) {
+            return map[row + 1][col];
         }
-        if (row - 1 >= 0 && col - 1 >= 0  && !colorsAreClose(map[row][col], map[row - 1][col], 20)  && colorsAreClose(map[row - 1][col], map[row][col - 1], 20)) {
-            return map[row - 1][col]; 
+        if (row - 1 >= 0 && col - 1 >= 0 && !colorsAreClose(map[row][col], map[row - 1][col], 20) && colorsAreClose(map[row - 1][col], map[row][col - 1], 20)) {
+            return map[row - 1][col];
         }
         return map[row][col];
     }
@@ -1123,6 +1219,874 @@
     function invertRGBA(rgba) {
         return [Math.max(0, 255 - rgba[0]), Math.max(0, 255 - rgba[1]), Math.max(255 - rgba[2]), 255];
     }
+    function shuffle(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        return a;
+    }
+
+    let transformations = [];
+
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        for (var i = 0; i < data.length; i += 4) {
+            let px = _bottomPx(canvas, data, i / 4);
+            if (!px || isEmpty(px))
+                px = _topPx(canvas, data, i / 4);
+            if (px) {
+                data[i] = px[0];
+                data[i + 1] = px[1];
+                data[i + 2] = px[2];
+                data[i + 3] = px[3];
+            }
+        }
+        context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        for (var i = data.length - 4; i >= 0; i -= 4) {
+            let px = _topPx(canvas, data, i / 4);
+            if (!px || isEmpty(px))
+                px = _bottomPx(canvas, data, i / 4);
+            if (px) {
+                data[i] = px[0];
+                data[i + 1] = px[1];
+                data[i + 2] = px[2];
+                data[i + 3] = px[3];
+            }
+        }
+        context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let s = Math.trunc(new Date().getSeconds() / 2);
+        let d = _randInt(5, 20);
+        let fns = [_topPx, _topleftPx, _rightPx, _toprightPx, _leftPx, _bottomleftPx, _bottomPx, _bottomrightPx];
+        for (var i = data.length - 4; i >= 0; i -= 4) {
+            let px = fns[s % 8](canvas, data, i / 4);
+            let c = 0;
+            while (!px) {
+                c++;
+                px = fns[(s + c) % 8](canvas, data, i / 4);
+            }
+            if (px && !isEmpty(px) && hasExactlyNEmptyNeighbours(canvas, data, i / 4, 2)) {
+                data[i] = (px[0] - d) % 255;
+                data[i + 1] = (px[1] - d) % 255;
+                data[i + 2] = (px[2] - d) % 255;
+                data[i + 3] = px[3];
+            }
+        }
+        context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let px = null;
+        for (var i = 0; i < data.length; i += 4) {
+            if (isEmpty([data[i], data[i + 1], data[i + 2], data[i + 3]])) {
+                px = cv_randomNeighbour(canvas, data, i / 4);
+                data[i] = px[0];
+                data[i + 1] = px[1];
+                data[i + 2] = px[2];
+                data[i + 3] = px[3];
+            }
+        }
+        context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let px = null;
+        for (var i = 0; i < data.length; i += 4) {
+            px = cv_randomNeighbour(canvas, data, i / 4);
+            data[i] = px[0];
+            data[i + 1] = px[1];
+            data[i + 2] = px[2];
+            data[i + 3] = px[3];
+        }
+        context.putImageData(imageData, 0, 0);
+    });
+    
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let px = null;
+        let n = _randInt(0, 4);
+        for (var i = 0; i < data.length; i += 4) {
+            if (hasExactlyNEmptyNeighbours(canvas, data, i / 4, n)) {
+                px = cv_randomNeighbour(canvas, data, i / 4);
+                data[i] = px[0];
+                data[i + 1] = px[1];
+                data[i + 2] = px[2];
+                data[i + 3] = px[3];
+            }
+        }
+        context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let px = null;
+        let fn = shuffle([_bottomPx, _topPx, _leftPx, _rightPx]);
+        let non_empty = false;
+        for (var i = 0; i < data.length; i += 4) {
+            if (hasEmptyNeighbour(canvas, data, i / 4)) {
+                for (var ix = 0; ix < 4; ix++) {
+                    px = fn[ix](canvas, data, i / 4);
+                    if (px && isEmpty(_topPx(canvas, data, i / 4 + 1))) {
+                        data[i] = px[0];
+                        data[i + 1] = px[1];
+                        data[i + 2] = px[2];
+                        data[i + 3] = px[3];
+                        break;
+                    }
+                }
+            }
+            if (!non_empty && data[i] != 0 || data[i + 1] != 0 || data[i + 2] != 0 || data[i + 3] != 0)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let non_empty = false;
+        let n = (new Date().getMinutes() * 6) % 255;
+        for (var i = 0; i < data.length; i += 4) {
+            if (hasEmptyNeighbour(canvas, data, i / 4)) {
+                data[i] = n;
+                data[i + 1] = n;
+                data[i + 2] = n;
+            }
+            if (!non_empty && data[i] != 0 || data[i + 1] != 0 || data[i + 2] != 0 || data[i + 3] != 0)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let non_empty = false;
+        let fns = shuffle([_bottomPx, _topPx, _leftPx, _rightPx]);
+        let fn = fns[0], fn_2 = fns[1];
+        let px = null;
+        for (var i = 0; i < data.length; i += 4) {
+            if (isEmpty(fn(canvas, data, i / 4))) {
+                px = fn_2(canvas, data, i / 4);
+                if (px) {
+                    newData[i] = px[0];
+                    newData[i + 1] = px[1];
+                    newData[i + 2] = px[2];
+                    newData[i + 3] = px[3];
+                }
+            }
+            if (!non_empty && newData[i + 3] >= 10)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let x = new Date().getMinutes() % 3;
+        for (var i = 0; i < data.length; i += 4) {
+            if (i < data.length - 3) {
+                newData[i + x] = i / 2 / (canvas.width) % _randInt(150, 255);
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let offset = _randInt(0, 255);
+        for (var i = 0; i < data.length; i += 4) {
+            if (i < data.length - 3);
+            newData[i + 1] = i % offset;
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let non_empty = false;
+        let n = (new Date().getMinutes() * 6) % 255;
+        let n1 = (new Date().getMinutes() * 12) % 255;
+        for (var i = 0; i < data.length; i += 4) {
+            if (hasEmptyNeighbour(canvas, data, i / 4)) {
+                newData[i] = n;
+                newData[i + 1] = n1;
+                newData[i + 2] = n;
+                newData[i + 3] = data[i + 3];
+            } else {
+                newData[i + 3] = 0;
+            }
+            if (!non_empty && newData[i] != 0 || newData[i + 1] != 0 || newData[i + 2] != 0 || newData[i + 3] != 0)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let fns = shuffle([_topPx, _bottomPx, _leftPx, _rightPx]);
+        let non_empty = false;
+        let px = null, last = null;
+        for (var i = 0; i < data.length; i += 4) {
+            if (data[i + 3] < 10) {
+                let c = 0;
+                for (let fn of fns) {
+                    px = fn(canvas, data, i / 4);
+                    if (px) {
+                        last = px;
+                        c++;
+                    }
+                }
+                if (c >= 3) {
+                    newData[i] = last[0];
+                    newData[i + 1] = last[1];
+                    newData[i + 2] = last[2];
+                    newData[i + 3] = last[3];
+                }
+            }
+            if (!non_empty && newData[i + 3] > 10)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let px = null, px_2 = null, px_3 = null;
+        for (var i = 0; i < data.length; i += 4) {
+            px = _topPx(canvas, data, i / 4);
+            px_2 = _rightPx(canvas, data, i / 4);
+            px_3 = _toprightPx(canvas, data, i / 4);
+            if (px && px_2 && px_3 && px[0] < 245 && px_2[0] > 10 && px[1] < 245 && px_3[0] === px_2[0] && px_2[0] === px[0]) {
+                newData[i] = (px[0] + px_2[0]) % 255;
+                newData[i + 1] = (px[1] + px_2[1]) % 255;
+                newData[i + 2] = (px[2] + px_2[2]) % 255;
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let px = null, px_2 = null, px_3 = null;
+        for (var i = 0; i < data.length; i += 4) {
+            px = _topPx(canvas, data, i / 4);
+            px_2 = _rightPx(canvas, data, i / 4);
+            px_3 = _toprightPx(canvas, data, i / 4);
+            if (px && px_2 && px_3 && px[0] == px_2[0] && Math.abs(px[0] - px_3[0]) % 3 == 0) {
+                newData[i] = (px_3[0] + 10) % 255;
+                newData[i + 1] = px_3[1];
+                newData[i + 2] = (px[2] + px_2[2]) % 255;
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let px = null, px_2 = null, px_3 = null;
+        let x = new Date().getMinutes() % 2 === 0;
+        for (var i = 0; i < data.length; i += 4) {
+            px = _bottomPx(canvas, data, i / 4);
+            px_2 = _topPx(canvas, data, i / 4);
+            px_3 = _bottomleftPx(canvas, data, i / 4);
+            if (px && px_2 && px_3 && px[0] == px_2[0] && Math.abs(px[0] - px_3[0]) % 3 == 0) {
+                newData[i] = (px_3[0] + 10) % 255;
+                newData[i + x ? i%3 : 1] = (px_3[0] + 4) % 255;
+                newData[i + 2] = (px[2] + px_2[2]) % 255;
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let px = null;
+        for (var i = 0; i < data.length; i += 4) {
+            px = _bottomPx(canvas, data, i / 4);
+            if (px  && data[i+3] > 10) {
+                newData[i] = (px[0] + 4) % 255;
+                newData[i + 1] = (data[i+1] + 4) % 255;
+                newData[i + 2] = (data[i+2] + 4) % 255;
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let px = null, px_2 = null;
+        for (var i = 0; i < data.length; i += 4) {
+            px = _bottomPx(canvas, data, i / 4);
+            px_2 = _rightPx(canvas, data, i /4);
+            if (px && px_2  && data[i+3] > 10) {
+                newData[i] = (px[0] + 4) % 255;
+                newData[i + 1] = (px_2[1] + 5) % 255;
+                newData[i + 2] = (px_2[2] + 6) % 255;
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let r = new Date().getMinutes() + 3;
+        for (var i = 0; i < data.length; i += 4) {
+            if (cv_hasDifferentColorAround(canvas, data, i / 4) && data[i + 3] > 50) {
+                let d = cv_smallestDistanceToEmptyPixel(canvas, data, i / 4);
+                newData[i + 3] = (255 - d * 10) % 255;
+                newData[i + 2] = (d * r) % 255;
+                newData[i + 1] = (d * r) % 255;
+                newData[i] = (d * r) % 255;
+            }
+
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let delta_r = _randInt(0, 30) - 15;
+        let delta_g = _randInt(0, 30) - 15;
+        let delta_b = _randInt(0, 30) - 15;
+        let px = null, px_2 = null, px_3 = null;
+        for (var i = 0; i < data.length; i += 4) {
+            px = _topPx(canvas, data, i / 4);
+            px_2 = _rightPx(canvas, data, i / 4);
+            px_3 = _toprightPx(canvas, data, i / 4);
+            if (px && px_2 && px_3 && Math.abs(px[0] - px_2[0]) < 60) {
+                data[i] = Math.min(255, Math.max(0, data[i] + delta_r));
+                data[i + 1] = Math.min(255, Math.max(0, data[i + 1] + delta_g));
+                data[i + 2] = Math.min(255, Math.max(0, data[i + 2] + delta_b));
+            }
+        }
+        context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        for (var i = 0; i < data.length; i += 4) {
+            let t = _topPx(canvas, data, i / 4);
+            let r = _rightPx(canvas, data, i / 4);
+            let tr = _toprightPx(canvas, data, i / 4);
+            let br = _bottomrightPx(canvas, data, i / 4);
+            let tl = _topleftPx(canvas, data, i / 4);
+            let bl = _bottomleftPx(canvas, data, i / 4);
+            let l = _leftPx(canvas, data, i / 4);
+            let b = _bottomPx(canvas, data, i / 4);
+            if (t && r && tr && bl && l && b && Math.abs(t[0] - r[0]) < 10 && Math.abs(l[0] - r[0]) < 20) {
+                newData[i] = Math.min(255, Math.max(0, Math.abs(0 - 2 * l[0] - tl[0] - bl[0] + 2 * r[0] + tr[0] + br[0]) + Math.abs(2 * t[0] + tr[0] + tl[0] - 2 * b[0] - bl[0] - br[0])));
+                newData[i + 1] = Math.min(255, Math.max(0, Math.abs(0 - 2 * l[1] - tl[1] - bl[1] + 2 * r[1] + tr[1] + br[1]) + Math.abs(2 * t[1] + tr[1] + tl[1] - 2 * b[1] - bl[1] - br[1])));
+                newData[i + 2] = Math.min(255, Math.max(0, Math.abs(0 - 2 * l[2] - tl[2] - bl[2] + 2 * r[2] + tr[2] + br[2]) + Math.abs(2 * t[2] + tr[2] + tl[2] - 2 * b[2] - bl[2] - br[2])));
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        for (var i = 0; i < data.length; i += 4) {
+            let t = _topPx(canvas, data, i / 4);
+            let r = _rightPx(canvas, data, i / 4);
+            let tr = _toprightPx(canvas, data, i / 4);
+            let br = _bottomrightPx(canvas, data, i / 4);
+            let tl = _topleftPx(canvas, data, i / 4);
+            let bl = _bottomleftPx(canvas, data, i / 4);
+            let l = _leftPx(canvas, data, i / 4);
+            let b = _bottomPx(canvas, data, i / 4);
+            if (t && r && tr && bl && l && b && Math.abs(t[0] - r[0]) < 10 && Math.abs(l[0] - r[0]) < 20) {
+                newData[i] = Math.min(255, Math.max(0, Math.abs(0 - i * l[0] - tl[0] - bl[0] + 2 * r[0] + tr[0] + br[0]) - Math.abs(i * t[0] + tr[0] + tl[0] - 2 * b[0] - bl[0] - br[0])));
+                newData[i + 1] = Math.min(255, Math.max(0, Math.abs(0 - i * l[1] - tl[1] - bl[1] + 2 * r[1] + tr[1] + br[1]) - Math.abs(i * t[1] + tr[1] + tl[1] - 2 * b[1] - bl[1] - br[1])));
+                newData[i + 2] = Math.min(255, Math.max(0, Math.abs(0 - i * l[2] - tl[2] - bl[2] + 2 * r[2] + tr[2] + br[2]) - Math.abs(i * t[2] + tr[2] + tl[2] - 2 * b[2] - bl[2] - br[2])));
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        for (var i = 0; i < data.length; i += 4) {
+            let t = _topPx(canvas, data, i / 4);
+            let r = _rightPx(canvas, data, i / 4);
+            let l = _leftPx(canvas, data, i / 4);
+            let b = _bottomPx(canvas, data, i / 4);
+            if (t && r && l && b) {
+                newData[i] = Math.min(255, Math.max(0, 5 * data[i] - t[0] - r[0] - l[0] - b[0]));
+                newData[i + 1] = Math.min(255, Math.max(0, 5 * data[i + 1] - t[1] - r[1] - l[1] - b[1]));
+                newData[i + 2] = Math.min(255, Math.max(0, 5 * data[i + 2] - t[2] - r[2] - l[2] - b[2]));
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let non_empty = false;
+        for (var i = 0; i < data.length; i += 4) {
+            let t = _topPx(canvas, data, i / 4);
+            let r = _rightPx(canvas, data, i / 4);
+            let tr = _toprightPx(canvas, data, i / 4);
+            let br = _bottomrightPx(canvas, data, i / 4);
+            let tl = _topleftPx(canvas, data, i / 4);
+            let bl = _bottomleftPx(canvas, data, i / 4);
+            let l = _leftPx(canvas, data, i / 4);
+            let b = _bottomPx(canvas, data, i / 4);
+            if (t && r && tr && bl && l && b && cv_hasDifferentColorAround(canvas, data, i / 4)) {
+                newData[i] = Math.min(255, Math.max(0, Math.abs(2 * t[0])));
+                newData[i + 1] = Math.min(255, Math.max(0, Math.abs(2 * tr[1])));
+                newData[i + 2] = Math.min(255, Math.max(0, Math.abs(br[2])));
+            }
+            if (!non_empty && newData[i + 3] > 10)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let non_empty = false;
+        let r = new Date().getMinutes() % 4 + 1;
+        let fns = shuffle([_topPx, _topleftPx, _rightPx, _toprightPx, _leftPx, _bottomleftPx, _bottomPx, _bottomrightPx]);
+        for (var i = 0; i < data.length; i += 4) {
+            let p1 = fns[0](canvas, data, i / 4);
+            let p2 = fns[1](canvas, data, i / 4);
+            let l = _leftPx(canvas, data, i / 4);
+            if (p1 && p2 && l && Math.trunc(i / 4 / canvas.width) % r == 0) {
+                newData[i] = Math.min(255, Math.max(0, Math.abs(2 * p1[0])));
+                newData[i + 1] = Math.min(255, Math.max(0, Math.abs(2 * p2[1])));
+                newData[i + 2] = Math.min(255, Math.max(0, Math.abs(l[2])));
+            }
+            if (!non_empty && newData[i + 3] > 10)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let tr, t, l, b, r, bl;
+
+        for (var i = 0; i < data.length; i += 4) {
+            t = _topPx(canvas, data, i / 4);
+            r = _rightPx(canvas, data, i / 4);
+            tr = _toprightPx(canvas, data, i / 4);
+            bl = _bottomleftPx(canvas, data, i / 4);
+            l = _leftPx(canvas, data, i / 4);
+            b = _bottomPx(canvas, data, i / 4);
+            if (t && r && tr && bl && l && b) {
+                newData[i] = Math.min(255, Math.max(0, data[i] - 2 * tr[0] - t[0] - r[0] + 2 * bl[0] + b[0] + l[0]));
+                newData[i + 1] = Math.min(255, Math.max(0, data[i + 1] - 2 * tr[1] - t[1] - r[1] + 2 * bl[1] + b[1] + l[1]));
+                newData[i + 2] = Math.min(255, Math.max(0, data[i + 2] - 2 * tr[2] - t[2] - r[2] + 2 * bl[2] + b[2] + l[2]));
+            }
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let non_empty = false;
+        let iter = getRandomIteration(data.length / 4);
+        let fns = [_topPx, _topleftPx, _rightPx, _toprightPx, _leftPx, _bottomleftPx, _bottomPx, _bottomrightPx];
+        let d1 = null, d2 = null;
+        let min = new Date().getMinutes() % 8;
+        let p = 0;
+        for (var i = 0; i < iter.length; i++) {
+            p = iter[i] * 4;
+            d1 = fns[min](canvas, data, p / 4);
+            d2 = fns[(min + 1) % 8](canvas, data, p / 4);
+            if (d1 && d2 && d1[0] === d2[0] && d1[3] > 10) {
+                data[p] = d1[0];
+                data[p + 1] = (d2[1] * d1[0]) % 255;
+                data[p + 2] = d1[2];
+                data[p + 3] = d2[3];
+            }
+            if (!non_empty && data[p + 3] != 0)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let non_empty = false;
+        let iter = getRandomIteration(data.length / 4);
+        let p = 0;
+        for (var i = 0; i < iter.length; i++) {
+            p = iter[i] * 4;
+            px = cv_smallestDistanceToEmptyPixel(canvas, data, p / 4);
+            if (px) {
+                data[p + 1] = data[(p + px) % data.length];
+                data[p + 2] = data[p + 2];
+                data[p + 3] = data[p + 3];
+            }
+            if (!non_empty && data[p + 3] != 0)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(imageData, 0, 0);
+    });
+    function _bottomPx(canvas, data, ix) {
+        if (data.length - ix <= canvas.width) {
+            return null;
+        }
+        return [data[ix * 4 + canvas.width * 4], data[ix * 4 + canvas.width * 4 + 1], data[ix * 4 + canvas.width * 4 + 2], data[ix * 4 + canvas.width * 4 + 3]];
+    }
+    function _topPx(canvas, data, ix) {
+        if (ix <= canvas.width) {
+            return null;
+        }
+        return [data[ix * 4 - canvas.width * 4], data[ix * 4 - canvas.width * 4 + 1], data[ix * 4 - canvas.width * 4 + 2], data[ix * 4 - canvas.width * 4 + 3]];
+    }
+    function _leftPx(canvas, data, ix) {
+        if (ix % canvas.width == 0) {
+            return null;
+        }
+        ix -= 1;
+        return [data[ix * 4], data[ix * 4 + 1], data[ix * 4 + 2], data[ix * 4 + 3]];
+    }
+    function _rightPx(canvas, data, ix) {
+        if (ix % canvas.width == canvas.width - 1) {
+            return null;
+        }
+        ix += 1;
+        return [data[ix * 4], data[ix * 4 + 1], data[ix * 4 + 2], data[ix * 4 + 3]];
+    }
+    function _toprightPx(canvas, data, ix) {
+        if (ix <= canvas.width || ix % canvas.width == canvas.width - 1) {
+            return null;
+        }
+        ix += 1;
+        return [data[ix * 4 - canvas.width * 4], data[ix * 4 - canvas.width * 4 + 1], data[ix * 4 - canvas.width * 4 + 2], data[ix * 4 - canvas.width * 4 + 3]];
+    }
+    function _topleftPx(canvas, data, ix) {
+        if (ix <= canvas.width || ix % canvas.width == 0) {
+            return null;
+        }
+        ix -= 1;
+        return [data[ix * 4 - canvas.width * 4], data[ix * 4 - canvas.width * 4 + 1], data[ix * 4 - canvas.width * 4 + 2], data[ix * 4 - canvas.width * 4 + 3]];
+    }
+    function _bottomrightPx(canvas, data, ix) {
+        if (data.length - ix <= canvas.width || ix % canvas.width == canvas.width - 1) {
+            return null;
+        }
+        ix += 1;
+        return [data[ix * 4 + canvas.width * 4], data[ix * 4 + canvas.width * 4 + 1], data[ix * 4 + canvas.width * 4 + 2], data[ix * 4 + canvas.width * 4 + 3]];
+    }
+    function _bottomleftPx(canvas, data, ix) {
+        if (ix % canvas.width == 0 || data.length - ix <= canvas.width) {
+            return null;
+        }
+        ix -= 1;
+        return [data[ix * 4 + canvas.width * 4], data[ix * 4 + canvas.width * 4 + 1], data[ix * 4 + canvas.width * 4 + 2], data[ix * 4 + canvas.width * 4 + 3]];
+    }
+    function isEmpty(px) {
+        return px && px[3] < 20;//  && px[0] == 0 && px[1] == 0 && px[2] == 0 && px[3] == 0;
+    }
+    function copyImgData(imageData) {
+        return new ImageData(
+            new Uint8ClampedArray(imageData.data),
+            imageData.width,
+            imageData.height
+        )
+    }
+    function cv_randomNeighbour(canvas, data, ix) {
+        let choices = [];
+        let px = _topPx(canvas, data, ix);
+        if (px) { choices.push(px); }
+        px = _bottomPx(canvas, data, ix);
+        if (px) { choices.push(px); }
+        px = _rightPx(canvas, data, ix);
+        if (px) { choices.push(px); }
+        px = _leftPx(canvas, data, ix);
+        if (px) { choices.push(px); }
+        return choices[_randInt(0, choices.length)];
+    }
+    function cv_smallestDistanceToEmptyPixel(canvas, data, ix) {
+        let smallest = 10000000;
+        for (var i = ix; i % canvas.width != 0; i--) {
+            if (data[i * 4 + 3] <= 5) {
+                if ((ix - i) < smallest) {
+                    smallest = ix - i;
+                }
+                break;
+            }
+            if ((ix - i) >= smallest)
+                break;
+        }
+        for (var i = ix; i % canvas.width != canvas.width - 1; i++) {
+            if (data[i * 4 + 3] <= 5) {
+                if ((i - ix) < smallest) {
+                    smallest = i - ix;
+                }
+                break;
+
+            }
+            if ((i - ix) >= smallest)
+                break;
+        }
+        for (var i = ix; data.length - i > canvas.width; i += canvas.width) {
+            if (data[i * 4 + 3] <= 5) {
+                if (Math.trunc((i - ix) / canvas.width) < smallest) {
+                    smallest = Math.trunc((i - ix) / canvas.width);
+                }
+                break;
+            }
+            if (Math.trunc((i - ix) / canvas.width) >= smallest) {
+                break;
+            }
+        }
+        for (var i = ix; i > canvas.width; i -= canvas.width) {
+            if (data[i * 4 + 3] <= 5) {
+                if (Math.trunc((ix - i) / canvas.width) < smallest) {
+                    smallest = Math.trunc((ix - i) / canvas.width);
+                }
+                break;
+            }
+        }
+        return smallest;
+    }
+    function cv_mostCommonColorAround(canvas, data, ix) {
+        let c = {};
+        let px = null;
+        for (let fn of [_topPx, _bottomPx, _leftPx, _rightPx]) {
+            px = fn(canvas, data, ix);
+            if (px && (px[3] > 20)) {
+                if (px in c) {
+                    c[px] += 1;
+                } else {
+                    c[px] = 1;
+                }
+            }
+        }
+        let highest = 0;
+        let highestC = null;
+        for (const [key, value] of Object.entries(c)) {
+            if (value >= highest) {
+                highest = value;
+                highestC = key;
+            }
+        }
+        if (highestC)
+            return highestC.split(",").map(function (cs) { return Number(cs); });
+        return highestC;
+    }
+
+    function averageNeighbourColor(canvas, data, ix) {
+        let c = 0;
+        let avg = [0, 0, 0, 0];
+        let px = _topPx(canvas, data, ix);
+        if (px) { avg[0] + px[0]; avg[1] += px[1]; avg[2] += px[2]; avg[3] += px[3]; c++; }
+        px = _bottomPx(canvas, data, ix);
+        if (px) { avg[0] + px[0]; avg[1] += px[1]; avg[2] += px[2]; avg[3] += px[3]; c++; }
+        px = _rightPx(canvas, data, ix);
+        if (px) { avg[0] + px[0]; avg[1] += px[1]; avg[2] += px[2]; avg[3] += px[3]; c++; }
+        px = _leftPx(canvas, data, ix);
+        if (px) { avg[0] + px[0]; avg[1] += px[1]; avg[2] += px[2]; avg[3] += px[3]; c++; }
+        return [avg[0] / c, avg[1] / c, avg[2] / c, avg[3] / c];
+    }
+    function hasExactlyNEmptyNeighbours(canvas, data, ix, n) {
+        let px = _topPx(canvas, data, ix);
+        let c = 0;
+        if (px && isEmpty(px)) { c++; }
+        if (c > n) { return false; }
+        px = _bottomPx(canvas, data, ix);
+        if (px && isEmpty(px)) { c++; }
+        if (c > n) { return false; }
+        px = _rightPx(canvas, data, ix);
+        if (px && isEmpty(px)) { c++; }
+        if (c > n) { return false; }
+        px = _leftPx(canvas, data, ix);
+        if (px && isEmpty(px)) { c++; }
+        return c == n;
+    }
+    function hasEmptyNeighbour(canvas, data, ix) {
+        let px = _topPx(canvas, data, ix);
+        if (px && isEmpty(px)) { return true; }
+        px = _bottomPx(canvas, data, ix);
+        if (px && isEmpty(px)) { return true; }
+        px = _rightPx(canvas, data, ix);
+        if (px && isEmpty(px)) { return true; }
+        px = _leftPx(canvas, data, ix);
+        if (px && isEmpty(px)) { return true; }
+        return false;
+    }
+    function hasNonEmptyNeighbour(canvas, data, ix) {
+        let px = _topPx(canvas, data, ix);
+        if (px && !isEmpty(px)) { return true; }
+        px = _bottomPx(canvas, data, ix);
+        if (px && !isEmpty(px)) { return true; }
+        px = _rightPx(canvas, data, ix);
+        if (px && !isEmpty(px)) { return true; }
+        px = _leftPx(canvas, data, ix);
+        if (px && !isEmpty(px)) { return true; }
+        return false;
+    }
+    function getRandomIteration(ixCount) {
+        let x = [];
+        for (let i = 0; i < ixCount; i++) {
+            x.push(i);
+        }
+        return shuffle(x);
+    }
+    function cv_hasDifferentColorAround(canvas, data, ix) {
+
+        let px = _topPx(canvas, data, ix);
+        if (px && (Math.abs(px[0] - data[ix * 4]) > 10 || Math.abs(px[1] - data[ix * 4 + 1]) > 10 || Math.abs(px[2] - data[ix * 4 + 2]) > 10 || Math.abs(px[3] - data[ix * 4 + 3]) > 10)) { return true; }
+        px = _bottomPx(canvas, data, ix);
+        if (px && (Math.abs(px[0] - data[ix * 4]) > 10 || Math.abs(px[1] - data[ix * 4 + 1]) > 10 || Math.abs(px[2] - data[ix * 4 + 2]) > 10 || Math.abs(px[3] - data[ix * 4 + 3]) > 10)) { return true; }
+        px = _rightPx(canvas, data, ix);
+        if (px && (Math.abs(px[0] - data[ix * 4]) > 10 || Math.abs(px[1] - data[ix * 4 + 1]) > 10 || Math.abs(px[2] - data[ix * 4 + 2]) > 10 || Math.abs(px[3] - data[ix * 4 + 3]) > 10)) { return true; }
+        px = _leftPx(canvas, data, ix);
+        if (px && (Math.abs(px[0] - data[ix * 4]) > 10 || Math.abs(px[1] - data[ix * 4 + 1]) > 10 || Math.abs(px[2] - data[ix * 4 + 2]) > 10 || Math.abs(px[3] - data[ix * 4 + 3]) > 10)) { return true; }
+        return false;
+    }
+
+    function setTransformations() {
+        let baseChance = Math.max(1, Math.trunc(transformations.length / 2));
+        let chosen = [];
+        for (let t of transformations) {
+            if (roll(baseChance)) {
+                chosen.push(t);
+            }
+        }
+        chosen = shuffle(chosen);
+        if (chosen.length >= 5) {
+            window.prTransformationIvl = 200;
+        } else {
+            window.prTransformationIvl = 100;
+        }
+        window.prTransformations = chosen;
+        window.prTransformationCount = 0;
+        console.log("TR: " + chosen.length);
+    }
+
+    function applyTransformations() {
+        let s = performance.now();
+        let c = prCanvas();
+        window.prTransformationCount ++;
+        for (var i = 0; i < window.prTransformations.length; i++) {
+            window.prTransformations[i](c);
+        }
+        let elapsed = performance.now() - s;
+        if (elapsed > window.prTransformationIvl && window.prTransformationCount > 5) {
+            clearInterval(window.sprite_animation);
+            if (elapsed < 950) {
+                let newInterval = elapsed + 50;
+                setTimeout(() => { window.sprite_animation = setInterval(applyTransformations, newInterval); }, newInterval);
+                console.log("Increasing interval from " + window.prTransformationIvl + " to " + newInterval);
+                window.prTransformationIvl = newInterval;
+            } else {
+                console.log("Stopping animation, taking too long.");
+            }
+        }
+        console.log(elapsed);
+    }
+    window.scaleCanvas = function (oc, scale, cb) {
+
+        var imageObject = new Image();
+        let w = oc.width; let h = oc.height;
+        let url = oc.toDataURL();
+        oc.style.width = w * scale + "px";
+        oc.style.height = h * scale + "px";
+        oc.width = w * scale * window.devicePixelRatio;
+        oc.height = h * scale * window.devicePixelRatio;
+        let context = oc.getContext("2d");
+        context.imageSmoothingEnabled = false;
+        imageObject.onload = function () {
+            context.clearRect(0, 0, oc.width, oc.height);
+            context.scale(scale * window.devicePixelRatio, scale * window.devicePixelRatio);
+            context.drawImage(imageObject, 0, 0);
+            if (cb) {
+                cb(oc);
+            }
+        }
+        imageObject.src = url;
+    }
+
 
     function genWithAnimation(c) {
         c = c + 1;
@@ -1132,15 +2096,66 @@
                 genWithAnimation(c)
             } else {
                 generateRandom('px_canvas', true);
+                if (USE_EFFECT_ANIMATION && roll(ANIMATION_CHANCE)) {
+                    setTransformations();
+                    window.sprite_animation = setInterval(applyTransformations, window.prTransformationIvl);
+                }
             }
         }, 12);
     }
-    document.getElementById("procgen_canvas").style.textAlign = "center";
-    document.getElementById("procgen_canvas").innerHTML = "<canvas id='px_canvas'></canvas>";
-    if (USE_ANIMATION) {
+
+        if (!window.prCanvas) {
+        window.prCanvas = function () {
+            return document.getElementById("px_canvas");
+        }
+    }
+    window.scaleUp = function () {
+        scaleCanvas(prCanvas(), 2);
+    }
+    window.scaleDown = function () {
+        scaleCanvas(prCanvas(), 0.5);
+    }
+
+    if (window.sprite_animation) {
+        clearInterval(window.sprite_animation);
+    }
+
+    function createUI() {
+
+        let c = document.getElementById("procgen_canvas");
+        c.style.textAlign = "center";
+        c.innerHTML = `
+            <div style='position:relative; display: inline-block; padding: 0 25px 0 25px;'> 
+                <div style='position: absolute; right: 0; font-family: monospace; user-select: none; font-size: 20px; opacity: 0.8; line-height: 1em;'> 
+                    <a style='cursor: pointer;' onclick='scaleUp()' title='Zoom in'><b>+</b></a><br>
+                    <a style='cursor: pointer;' onclick='scaleDown()' title='Zoom out'><b>-</b></a><br>
+                    <a style='cursor: pointer;' onclick='saveProcgenCanvas()' title='Save to Image'><b>&#9113;</b></a>
+                </div>
+                <canvas id='px_canvas'></canvas>
+            </div>
+        `;
+
+        let cvs = prCanvas();
+        cvs.getContext("2d").imageSmoothingEnabled = false;
+        cvs.style.imageRendering = 'pixelated';
+    }
+
+    if (!window.saveProcgenCanvas) {
+        window.saveProcgenCanvas = function () {
+            pycmd("procgen-save " + prCanvas().toDataURL("image/png"));
+        }
+    }
+
+    createUI();
+
+    if (USE_RENDER_ANIMATION) {
         genWithAnimation(0);
     } else {
         generateRandom('px_canvas', true);
+        if (USE_EFFECT_ANIMATION && roll(ANIMATION_CHANCE)) {
+            setTransformations();
+            window.sprite_animation = setInterval(applyTransformations, window.prTransformationIvl);
+        }
     }
 
 })();
