@@ -1,5 +1,4 @@
 {
     "use_render_animation": true,
-    "use_effect_animation": true,
-    "scale": 10
+    "use_effect_animation": true
 }
