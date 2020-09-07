@@ -2041,7 +2041,6 @@
         }
         window.prTransformations = chosen;
         window.prTransformationCount = 0;
-        console.log("TR: " + chosen.length);
     }
 
     function applyTransformations() {
@@ -2063,7 +2062,7 @@
                 console.log("Stopping animation, taking too long.");
             }
         }
-        console.log(elapsed);
+        // console.log(elapsed);
     }
     window.scaleCanvas = function (oc, scale, cb) {
 
