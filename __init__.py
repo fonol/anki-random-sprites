@@ -214,12 +214,9 @@ document.body.appendChild(procgen_js);
 {{Back}} 
 
 <script>
-if (!document.getElementById('procgen_js')) {
     const procgen_js = document.createElement('script');
     procgen_js.src = '_procgen.js';
     document.body.appendChild(procgen_js);
-    procgen_js.setAttribute('id','procgen_js');
-}
 </script>""")
         te_2.setReadOnly(True)
         layout.addWidget(te_2)
