@@ -39,7 +39,6 @@ def init_addon():
     gui_hooks.webview_did_receive_js_message.append(expanded_on_bridge_cmd)
 
 
-
 def after_collection_did_load(col: "Collection"):
     """ Check if add-on js file is in media folder, if not, insert it. """
 
@@ -106,6 +105,22 @@ class SettingsTab(QWidget):
         layout.addWidget(self.effects_cb)
         layout.addSpacing(20)
 
+        self.zoom = QDoubleSpinBox()
+        self.zoom.setSingleStep(0.1)
+        self.zoom.setMinimum(0.1)
+        self.zoom.setMaximum(10.0)
+        self.zoom.setDecimals(1)
+        self.zoom.valueChanged.connect(self.zoom_changed)
+        self.zoom.setValue(self.config["zoom"])
+        zoom_hb = QHBoxLayout()
+        zoom_hb.addWidget(QLabel("Size of rendered image (1.0 = 100%)"))
+        zoom_hb.addStretch()
+        zoom_hb.addWidget(QLabel("Scale"))
+        zoom_hb.addWidget(self.zoom)
+        layout.addLayout(zoom_hb)
+        layout.addSpacing(20)
+
+
         hbox = QHBoxLayout()
         replace_btn = QPushButton("Replace Script")
         replace_btn.clicked.connect(self.replace_js_file)
@@ -118,7 +133,8 @@ class SettingsTab(QWidget):
         line.setFrameShadow(QFrame.Sunken) 
         layout.addWidget(line)
         layout.addSpacing(10)
-        layout.addWidget(QLabel("Replaces the script (_procgen.js) in Anki's media folder with the current settings"))
+        layout.addWidget(QLabel("""Replaces the script (_procgen.js) in Anki's media folder with the current settings.
+Use this after you changed any settings."""))
         layout.addSpacing(10)
         layout.addLayout(hbox)
         self.setLayout(layout)
@@ -130,12 +146,18 @@ class SettingsTab(QWidget):
     def update_effect_animation(self, state):
         self.config["use_effect_animation"] = self.effects_cb.isChecked()
         mw.addonManager.writeConfig(__name__, self.config)
+
+    def zoom_changed(self, zoom):
+        self.config["zoom"] = zoom
+        mw.addonManager.writeConfig(__name__, self.config)
+
     
     def replace_js_file(self):
         """ Replace the _procgen.js file in the media folder with the file contained in the add-on folder. """
 
         use_animation   = self.use_animation_cb.isChecked()
         use_effect      = self.effects_cb.isChecked()
+        zoom            = self.config["zoom"]
 
         if mw.col.media.have("_procgen.js"):
             mw.col.media.trash_files(["_procgen.js"])
@@ -151,6 +173,7 @@ class SettingsTab(QWidget):
             for line in infile:
                 line = re.sub("USE_RENDER_ANIMATION = ?(false|true)", "USE_RENDER_ANIMATION = " + str(use_animation).lower(), line)
                 line = re.sub("USE_EFFECT_ANIMATION = ?(false|true)", "USE_EFFECT_ANIMATION = " + str(use_effect).lower(), line)
+                line = re.sub(r"ZOOM = ?\d+\.\d+", "ZOOM = " + str(zoom).lower(), line)
                 outfile.write(line)
 
         mw.col.media.addFile(addon_folder() + "_procgen.js")
@@ -158,6 +181,61 @@ class SettingsTab(QWidget):
         os.remove(addon_folder() + "_procgen.js")
         os.rename(addon_folder() + "_procgen_orig.js", addon_folder() + "_procgen.js")
         tooltip(f"Replaced file in media folder.")
+    
+
+
+class DemoTab(QWidget):
+
+    def __init__(self, parent):
+        super(QWidget, self).__init__(parent)
+        self.setup_ui()
+
+
+    def current_script(self):
+        config          = mw.addonManager.getConfig(__name__)         
+        use_animation   = config["use_render_animation"]
+        use_effect      = config["use_effect_animation"]
+        zoom            = config["zoom"]
+        script          = ""
+        with open(addon_folder()  + "_procgen.js", 'r') as script_file:
+            for line in script_file:
+                line = re.sub("USE_RENDER_ANIMATION = ?(false|true)", "USE_RENDER_ANIMATION = " + str(use_animation).lower(), line)
+                line = re.sub("USE_EFFECT_ANIMATION = ?(false|true)", "USE_EFFECT_ANIMATION = " + str(use_effect).lower(), line)
+                line = re.sub(r"ZOOM = ?\d+\.\d+", "ZOOM = " + str(zoom).lower(), line)
+                script = f"{script}{line}"
+        return script
+
+    def setup_ui(self):
+        self.layout = QVBoxLayout()
+        self.web    = QWebEngineView()
+
+        self.web.show()
+        self.layout.addWidget(self.web)
+        self.refresh_btn = QPushButton("Reload")
+        self.refresh_btn.clicked.connect(self.refresh)
+        hbox = QHBoxLayout()
+        hbox.addStretch()
+        hbox.addWidget(self.refresh_btn)
+        hbox.addStretch()
+        self.layout.addSpacing(10)
+        self.layout.addLayout(hbox)
+        self.layout.addSpacing(10)
+        self.setLayout(self.layout)
+        self.refresh()
+
+    def refresh(self):
+        script      = self.current_script()
+        self.web.setHtml(f"""
+            <style>* {{ background: beige; }}</style>
+            <div id='procgen_canvas' style='margin-top: 40px; margin-bottom: 40px;'></div>
+            <div style='text-align: center;'><b>Question?</b></div>
+            <hr>
+            <div style='text-align: center;'><b>Answer!</b></div>
+            <script>
+                {script}
+            </script>
+        """)
+
 
 class InfoTab(QWidget):
 
@@ -185,38 +263,34 @@ after you answered a card.
         le_1.setText("<div id='procgen_canvas'></div>")
         le_1.setReadOnly(True)
         layout.addWidget(le_1)
-        layout.addSpacing(15)
+        layout.addSpacing(10)
 
         lbl_2 = QLabel("2. This will execute the script and fill 'procgen_canvas' with the image:")
         lbl_2.setStyleSheet("border: 3px solid #2496dc;")
         layout.addWidget(lbl_2)
         te_1 = QTextEdit()
         te_1.setPlainText("""<script>
-const procgen_js = document.createElement('script');
-procgen_js.src = '_procgen.js';
-document.body.appendChild(procgen_js);
+document.body.append(Object.assign(document.createElement('script'),{ src:"_procgen.js"}));
 </script>
         """)
         te_1.setReadOnly(True)
-        te_1.setMaximumHeight(100)
+        te_1.setMaximumHeight(70)
         layout.addWidget(te_1)
         # te_1.setFixedHeight(te_1.document().size().toSize().height() + 5)
-        layout.addSpacing(15)
+        layout.addSpacing(10)
 
         lbl_3 = QLabel("E.g. an example back side would look like:")
         lbl_3.setStyleSheet("border: 3px solid #2496dc;")
         layout.addWidget(lbl_3)
         te_2 = QTextEdit()
-        te_2.setPlainText("""<div style='margin-bottom: 20px;' id='procgen_canvas'></div>
+        te_2.setPlainText("""<div id='procgen_canvas'></div>
 
 {{Front}}
 <hr/>
 {{Back}} 
 
 <script>
-    const procgen_js = document.createElement('script');
-    procgen_js.src = '_procgen.js';
-    document.body.appendChild(procgen_js);
+document.body.append(Object.assign(document.createElement('script'),{ src:"_procgen.js"}));
 </script>""")
         te_2.setReadOnly(True)
         layout.addWidget(te_2)
@@ -243,9 +317,12 @@ class InfoDialog(QDialog):
         self.tabs           = QTabWidget()
         self.tab_settings   = SettingsTab(self) 
         self.tab_info       = InfoTab(self) 
+        self.tab_demo       = DemoTab(self)
 
         self.tabs.addTab(self.tab_settings, "Settings")
         self.tabs.addTab(self.tab_info, "Info")
+        self.tabs.addTab(self.tab_demo, "Demo")
+        self.tabs.currentChanged.connect(self.tab_change)
         self.layout().addWidget(self.tabs)
 
         close = QPushButton("Close")
@@ -256,6 +333,9 @@ class InfoDialog(QDialog):
         layout.addLayout(hbottom)
         self.show()
 
+    def tab_change(self, ix):
+        if ix == 2:
+            self.tabs.currentWidget().refresh()
 
     
 
