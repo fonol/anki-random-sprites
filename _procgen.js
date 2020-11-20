@@ -38,20 +38,22 @@
     /**  Every nth time on avg., the generated image should have an animation effect */
     const ANIMATION_CHANCE = 5;
 
+    const ZOOM = 1.0;
+
     const template_1 = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 1, 1, 1, 1],
-        [0, 0, 0, 1, 0, 1, 1, 1, 1],
-        [0, 0, 0, 1, 1, 1, 0, 1, 1],
-        [0, 0, 0, 0, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 1, 1, 1, 1, 1],
-        [0, 0, 0, 1, 0, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 1, 7, 1],
+        [0, 0, 0, 0, 0, 0, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 1, 1, 1],
+        [0, 0, 0, 0, 0, 7, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 0, 1, 1, 1, 0, 1],
+        [0, 0, 0, 0, 0, 7, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
@@ -226,7 +228,73 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
-
+    const template_12 = [
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 1],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 0, 0, 0, 0, 0, 0, 0],
+        [3, 1, 1, 1, 1, 1, 1, 1, 1],
+        [3, 3, 3, 3, 3, 3, 3, 3, 3]
+    ];
+    const template_13 = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 7, 0, 7, 0, 0, 7, 0],
+        [3, 1, 1, 1, 1, 1, 1, 1, 1],
+        [3, 3, 3, 3, 3, 3, 3, 3, 3]
+    ];
+    const template_14 = [
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        [3, 3, 3, 3, 3, 3, 3, 3, 3]
+    ];
+    const template_15 = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 3, 3, 3, 3, 3, 3],
+        [0, 0, 3, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 8, 0, 0, 0, 0, 0],
+        [0, 0, 3, 8, 0, 0, 0, 0, 0],
+        [0, 0, 3, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 3, 3, 3, 3, 3, 3],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
     const singleTemplates = [];
 
@@ -272,9 +340,9 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 6],
+        [0, 0, 0, 0, 0, 0, 0, 0, 7],
         [0, 0, 0, 0, 0, 0, 0, 0, 8],
-        [0, 0, 0, 0, 0, 0, 0, 0, 6],
+        [0, 0, 0, 0, 0, 0, 0, 0, 7],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -300,7 +368,326 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0]]
     );
+    
+    const heads = [];
 
+    heads.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 4, 4, 4],
+        [0, 0, 0, 0, 1, 1, 4, 4, 4],
+        [0, 0, 0, 0, 0, 1, 4, 4, 4],
+        [0, 0, 0, 0, 0, 0, 4, 4, 4],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    heads.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 3, 3],
+        [0, 0, 0, 0, 5, 5, 3, 4, 4],
+        [0, 0, 0, 0, 5, 5, 3, 4, 4],
+        [0, 0, 0, 0, 0, 0, 3, 4, 4],
+        [0, 0, 0, 0, 0, 0, 0, 3, 3],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    heads.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 2, 2, 2],
+        [0, 0, 0, 0, 0, 0, 2, 2, 4],
+        [0, 0, 1, 0, 0, 0, 0, 2, 4],
+        [0, 0, 0, 0, 0, 0, 0, 2, 4],
+        [0, 1, 0, 0, 0, 0, 0, 2, 2],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    const torsos = [];
+
+    torsos.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 1, 0, 1, 4],
+        [0, 0, 0, 1, 1, 4, 4, 4, 4],
+        [0, 0, 0, 1, 1, 0, 0, 4, 4],
+        [0, 0, 0, 1, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    torsos.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 1, 1, 1, 0, 0, 4],
+        [0, 1, 4, 4, 4, 4, 4, 4, 4],
+        [0, 0, 1, 1, 1, 0, 0, 4, 4],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    torsos.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 4],
+        [0, 0, 0, 6, 3, 3, 3, 4, 4],
+        [0, 0, 0, 0, 0, 0, 0, 4, 4],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    torsos.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 5, 3],
+        [0, 0, 0, 0, 6, 3, 3, 3, 3],
+        [0, 0, 0, 0, 0, 0, 0, 5, 3],
+        [0, 0, 0, 0, 0, 0, 0, 0, 3],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    const eyes = [];
+    eyes.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 3, 3, 0],
+        [0, 0, 0, 0, 0, 3, 4, 4, 3],
+        [0, 0, 0, 0, 0, 3, 4, 4, 3],
+        [0, 0, 0, 0, 0, 0, 3, 3, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    eyes.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 3, 0],
+        [0, 5, 0, 0, 0, 0, 3, 4, 3],
+        [0, 0, 0, 0, 0, 0, 0, 3, 0],
+        [0, 0, 0, 5, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    eyes.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 5, 0, 0, 0, 0, 3, 0],
+        [0, 0, 0, 0, 0, 0, 3, 4, 3],
+        [0, 5, 0, 0, 0, 0, 0, 3, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 5, 0, 0],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    eyes.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 5, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 5, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    eyes.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 5, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 5, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    const feet = [];
+    feet.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 1, 1, 1, 4],
+        [0, 0, 0, 0, 0, 1, 4, 4, 4],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+
+    feet.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 1, 4],
+        [0, 0, 0, 0, 0, 0, 0, 4, 4],
+        [0, 0, 0, 0, 0, 6, 4, 4, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+    feet.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 5, 0, 0, 0, 0, 0, 0, 3],
+        [0, 0, 5, 5, 0, 0, 0, 5, 3],
+        [0, 5, 0, 0, 0, 0, 5, 3, 5],
+        [0, 0, 0, 5, 5, 3, 3, 3, 5],
+        [5, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]);
+
+    const bugs = [];
+    bugs.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 5, 5, 5, 5],
+        [0, 0, 0, 0, 0, 5, 5, 5, 5],
+        [0, 0, 0, 0, 0, 5, 5, 5, 5],
+        [0, 0, 0, 0, 0, 5, 5, 5, 3],
+        [0, 0, 0, 0, 0, 5, 5, 3, 3],
+        [0, 0, 0, 0, 0, 5, 5, 5, 5],
+        [0, 0, 0, 0, 0, 5, 5, 5, 5],
+        [0, 0, 0, 0, 0, 5, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    ]);
+    bugs.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 5, 5],
+        [0, 0, 0, 0, 5, 5, 5, 5, 5],
+        [0, 0, 0, 0, 5, 5, 5, 5, 5],
+        [0, 0, 0, 0, 5, 5, 5, 5, 5],
+        [0, 0, 0, 0, 5, 5, 5, 5, 5],
+        [0, 0, 0, 7, 5, 5, 5, 5, 5],
+        [0, 0, 0, 0, 5, 5, 5, 5, 5],
+        [0, 0, 0, 0, 5, 5, 5, 5, 5],
+        [0, 0, 0, 0, 5, 5, 5, 5, 5],
+        [0, 0, 0, 0, 5, 5, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 0, 5, 5],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    ]);
+    bugs.push([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 5, 5, 5, 0, 0, 5, 5],
+        [0, 0, 5, 5, 5, 5, 5, 5, 5],
+        [0, 0, 5, 5, 5, 5, 5, 5, 5],
+        [0, 0, 0, 5, 5, 5, 5, 5, 5],
+        [0, 0, 0, 5, 5, 5, 5, 7, 5],
+        [0, 0, 0, 5, 7, 5, 5, 7, 5],
+        [0, 0, 0, 5, 5, 5, 5, 7, 5],
+        [0, 0, 0, 5, 5, 5, 5, 5, 5],
+        [0, 0, 0, 5, 5, 5, 5, 5, 5],
+        [0, 0, 5, 5, 5, 5, 5, 5, 5],
+        [0, 0, 5, 5, 5, 0, 0, 5, 5],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    ]);
+  
     class PMapTemplate {
         constructor(template, steps) {
             this.template = template;
@@ -455,8 +842,9 @@
                 return this.brightenColor([r, g, b], n - 1);
             }
         }
-        printToCanvas(canvasId, effects) {
+        printToCanvas(canvas, effects) {
             const scale_sqrt = Math.round(Math.sqrt(SCALE));
+
             let map = this.scaledMap(this.mapRBGValues, scale_sqrt);
             const baseEffectDice = 7;
 
@@ -488,11 +876,8 @@
 
             map = this.scaledMap(map, scale_sqrt);
 
-            const canvas = document.getElementById(canvasId);
             canvas.width = map[0].length;
             canvas.height = map.length;
-            // canvas.style.width = map[0].length;
-            // canvas.style.height = map.length;
 
             const ctx = canvas.getContext('2d');
             const imgData = ctx.createImageData(canvas.width, canvas.height);
@@ -1036,7 +1421,7 @@
     }
     function overlayAll(maps) {
         let current = maps[0];
-        for (var i = 1; i < maps.length - 1; i++) {
+        for (var i = 1; i <= maps.length - 1; i++) {
             current = overlayMaps(current, maps[i]);
         }
         return current;
@@ -1069,9 +1454,10 @@
         return map1;
     }
 
-    function generateRandom(canvasId, effects = false) {
+    function generateRandom(canvas, effects = false) {
         let temps = [];
         let singles = [];
+        let predef = [];
 
         temps.push(new PMapTemplate(template_1, defaultSteps()));
         temps.push(new PMapTemplate(template_2, defaultSteps()));
@@ -1084,27 +1470,43 @@
         temps.push(new PMapTemplate(template_9, ["fillborders", "brighten", "[coloredborder]"]));
         temps.push(new PMapTemplate(template_10, ["fillborders", "brighten", "[coloredborder]"]));
         temps.push(new PMapTemplate(template_11, ["fillborders", "brighten", "[coloredborder]"]));
+        temps.push(new PMapTemplate(template_12, defaultSteps()));
+        temps.push(new PMapTemplate(template_13, defaultSteps()));
+        temps.push(new PMapTemplate(template_14, defaultSteps()));
+        temps.push(new PMapTemplate(template_15, defaultSteps()));
 
         for (let i = 0; i < singleTemplates.length; i++) {
             singles.push(new PMapTemplate(singleTemplates[i], defaultSteps()));
         }
 
         let maps = [];
+        let was_predef = false;
 
-        if (roll(2)) {
+        if (roll(4)) {
+            was_predef = true;
+            predef.push(
+                [heads, torsos, feet, eyes], 
+                [bugs] 
+                );
+
+            let predef_pipeline = predef[_randInt(0, predef.length)];
+            for (var i = 0; i < predef_pipeline.length; i++) {
+                maps.push(new PMapTemplate(predef_pipeline[i][_randInt(0, predef_pipeline[i].length)], defaultSteps()).generateMap());
+            }
+        } else if (roll(2)) {
+            let chosen = singles[_randInt(0, singles.length)];
+            maps.push(chosen.generateMap());
+        } else {
             const rounds = _randInt(3, 8);
             for (var i = 0; i < rounds; i++) {
                 let chosen = temps[_randInt(0, temps.length)];
                 let map = chosen.generateMap();
                 maps.push(map);
             }
-        } else {
-            let chosen = singles[_randInt(0, singles.length)];
-            maps.push(chosen.generateMap());
         }
 
         let fused = overlayAll(maps);
-        fused.printToCanvas(canvasId, effects)
+        fused.printToCanvas(canvas, effects && !was_predef);
     }
 
     function copyRGBMap(map) {
@@ -1809,6 +2211,114 @@
         if (non_empty)
             context.putImageData(imageData, 0, 0);
     });
+      transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let non_empty = false;
+        let iter = getRandomIteration(data.length / 4);
+        let p = 0, diff = false;
+        let x = new Date().getSeconds() % 3;
+        for (var i = 0; i < iter.length; i++) {
+            p = iter[i] * 4;
+            diff = cv_hasDifferentColorAround(canvas, data, p / 4);
+            if (diff) {
+                data[p+0] = (x * data[p+0] +100) % 255;
+                data[p+1] = (x * data[p+1] +100) % 255;
+                data[p+2] = (x * data[p+2] +100) % 255;
+            }
+            if (!non_empty && data[p + 3] != 0)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(imageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let non_empty = false;
+        let iter = getRandomIteration(data.length / 4);
+        let p = 0, diff = false;
+        let x = 4;
+        let y = new Date().getSeconds() % 255;
+        let lum = 0;
+        for (var i = 0; i < iter.length; i++) {
+            p = iter[i] * 4;
+            if (data[p+3] <= 0)
+            continue;
+            lum = (data[p] + data[p+1] + data[p+2]) * 255 / 765;
+            diff = cv_hasDifferentColorAround(canvas, data, p / 4);
+            if (diff) {
+                if (y % 3 !== 0) {
+                    data[p+2] = Math.max(Math.min((lum - x), 255), 60);
+                    data[p+1] = Math.max(Math.min((lum - x), 255), 60);
+                    data[p+0] = Math.max(Math.min((lum - x), 255), 60);
+                } else {
+
+                    data[p+2] = Math.max(Math.min((lum + x), 210), 10);
+                    data[p+1] = Math.max(Math.min((lum + x), 210), 10);
+                    data[p+0] = Math.max(Math.min((lum + x), 210), 10);
+                }
+            }
+            if (!non_empty && data[p + 3] != 0)
+                non_empty = true;
+        }
+        if (non_empty)
+            context.putImageData(imageData, 0, 0);
+    });
+
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let n = _randInt(2, 2);
+        for (var i = 0; i < data.length; i += 4) {
+            if (hasExactlyNEmptyNeighbours(canvas, data, i / 4, n)) {
+                newData[i] = 0;
+                newData[i + 1] = 0;
+                newData[i + 2] = 0;
+                newData[i + 3] = 0;
+            }
+        }
+        if (roll(3)) {
+            for (var i = 0; i < data.length; i += 4) {
+                if (hasExactlyNEmptyNeighbours(canvas, newData, i / 4, 4)) {
+                    newData[i] = 0;
+                    newData[i + 1] = 0;
+                    newData[i + 2] = 0;
+                    newData[i + 3] = 0;
+                }
+            }
+            clearInterval(window.sprite_animation);
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+    transformations.push((canvas) => {
+        let context = canvas.getContext("2d");
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+        let cimageData = copyImgData(imageData);
+        let newData = cimageData.data;
+        let f = 1.04; 
+        if (roll(2))
+            f = 1.14; 
+        for (var i = 0; i < data.length; i += 4) {
+            if (data[i+3] > 0 && !cv_hasDifferentColorAround(canvas, data, i / 4)) {
+                newData[i] = Math.max(0, Math.min(255, Math.trunc(data[i] * f)));
+                newData[i+1] = Math.max(0, Math.min(255, Math.trunc(data[i+1] * f)));
+                newData[i+2] = Math.max(0, Math.min(255, Math.trunc(data[i+2] * f)));
+            }
+        }
+        if (roll(7)) {
+            clearInterval(window.sprite_animation);
+        }
+        context.putImageData(cimageData, 0, 0);
+    });
+   
+
     function _bottomPx(canvas, data, ix) {
         if (data.length - ix <= canvas.width) {
             return null;
@@ -2046,6 +2556,7 @@
     function applyTransformations() {
         let s = performance.now();
         let c = prCanvas();
+        if (!c) { return; }
         window.prTransformationCount ++;
         for (var i = 0; i < window.prTransformations.length; i++) {
             window.prTransformations[i](c);
@@ -2087,14 +2598,14 @@
     }
 
 
-    function genWithAnimation(c) {
+    function genWithAnimation(canvas, c) {
         c = c + 1;
-        generateRandom('px_canvas', effects = false);
+        generateRandom(canvas, effects = false);
         setTimeout(function () {
             if (c < 14) {
-                genWithAnimation(c)
+                genWithAnimation(canvas, c)
             } else {
-                generateRandom('px_canvas', true);
+                generateRandom(canvas, true);
                 if (USE_EFFECT_ANIMATION && roll(ANIMATION_CHANCE)) {
                     setTransformations();
                     window.sprite_animation = setInterval(applyTransformations, window.prTransformationIvl);
@@ -2103,7 +2614,7 @@
         }, 12);
     }
 
-        if (!window.prCanvas) {
+    if (!window.prCanvas) {
         window.prCanvas = function () {
             return document.getElementById("px_canvas");
         }
@@ -2121,19 +2632,21 @@
 
     function createUI() {
 
+
         let c = document.getElementById("procgen_canvas");
         c.style.textAlign = "center";
+        c.style.zoom = ZOOM;
+        let print_btn = window.pycmd ? "<a style='font-size: 17px; cursor: pointer;' onclick='saveProcgenCanvas()' title='Save to Image'><b>&#9113;</b></a>" : "";
         c.innerHTML = `
             <div style='position:relative; display: inline-block; padding: 0 35px 0 35px;'> 
                 <div style='position: absolute; right: 0; font-family: monospace; user-select: none; opacity: 0.8; line-height: 1em;'> 
-                    <a style='font-size: 17px; cursor: pointer;' onclick='scaleUp()' title='Zoom in'><b>+</b></a><br>
-                    <a style='font-size: 17px; cursor: pointer;' onclick='scaleDown()' title='Zoom out'><b>-</b></a><br>
-                    <a style='font-size: 17px; cursor: pointer;' onclick='saveProcgenCanvas()' title='Save to Image'><b>&#9113;</b></a>
+                    <a style='font-size: 17px; cursor: pointer; display: inline-block; margin-bottom: 5px;' onclick='scaleUp()' title='Zoom in'><b>+</b></a><br>
+                    <a style='font-size: 17px; cursor: pointer; display: inline-block; margin-bottom: 5px;' onclick='scaleDown()' title='Zoom out'><b>-</b></a><br>
+                    ${print_btn}
                 </div>
-                <canvas id='px_canvas'></canvas>
+                <canvas class='px_canvas' id='px_canvas'></canvas>
             </div>
         `;
-
         let cvs = prCanvas();
         cvs.getContext("2d").imageSmoothingEnabled = false;
         cvs.style.imageRendering = 'pixelated';
@@ -2147,13 +2660,17 @@
 
     createUI();
 
-    if (USE_RENDER_ANIMATION) {
-        genWithAnimation(0);
-    } else {
-        generateRandom('px_canvas', true);
-        if (USE_EFFECT_ANIMATION && roll(ANIMATION_CHANCE)) {
-            setTransformations();
-            window.sprite_animation = setInterval(applyTransformations, window.prTransformationIvl);
+    let canvases = document.getElementsByClassName("px_canvas");
+    for (var i = 0; i < canvases.length; i++) {
+        let c = canvases[i];
+        if ((typeof(window._procgen_dev) === "undefined" || !window._procgen_dev) && USE_RENDER_ANIMATION) {
+            genWithAnimation(c, 0);
+        } else {
+            generateRandom(c, true);
+            if (USE_EFFECT_ANIMATION && roll(ANIMATION_CHANCE)) {
+                setTransformations();
+                window.sprite_animation = setInterval(applyTransformations, window.prTransformationIvl);
+            }
         }
     }
 
