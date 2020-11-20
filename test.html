@@ -1,12 +1,14 @@
-<div style='margin-top: 150px;' id='procgen_canvas'></div>
+<div style='' id='procgen_canvas'></div>
+
 
 <script>
+    window._procgen_dev = true;
     function gen() {
         const procgen_js = document.createElement('script');
         procgen_js.src = '_procgen.js';
         document.body.appendChild(procgen_js);
     }
     gen();
-    setInterval(gen, 2000);
+    //setInterval(gen, 2000);
 </script>
             
