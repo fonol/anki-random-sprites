@@ -1,4 +1,5 @@
 {
     "use_render_animation": true,
-    "use_effect_animation": true
+    "use_effect_animation": true,
+    "zoom": 0.8
 }
