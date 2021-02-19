@@ -894,8 +894,8 @@
             ctx.putImageData(imgData, 0, 0);
 
             // effect: cut out image in circle 
-            if (roll(5)) {
-                let radius = _randInt(10, 80);
+            if (roll(6)) {
+                let radius = _randInt(20, 80);
                 let x = Math.trunc(canvas.width / 2);
                 let y = Math.trunc(canvas.height / 2);
                 ctx.globalCompositeOperation = 'destination-in'
