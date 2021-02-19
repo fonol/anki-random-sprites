@@ -892,6 +892,17 @@
                 }
             }
             ctx.putImageData(imgData, 0, 0);
+
+            // effect: cut out image in circle 
+            if (roll(5)) {
+                let radius = _randInt(10, 80);
+                let x = Math.trunc(canvas.width / 2);
+                let y = Math.trunc(canvas.height / 2);
+                ctx.globalCompositeOperation = 'destination-in'
+                ctx.arc(x, y, radius, 0, Math.PI*2, true);
+                ctx.fill();
+            } 
+
         }
 
         scaledMap(map, scale) {
@@ -1493,7 +1504,7 @@
             for (var i = 0; i < predef_pipeline.length; i++) {
                 maps.push(new PMapTemplate(predef_pipeline[i][_randInt(0, predef_pipeline[i].length)], defaultSteps()).generateMap());
             }
-        } else if (roll(2)) {
+        } else if (roll(3)) {
             let chosen = singles[_randInt(0, singles.length)];
             maps.push(chosen.generateMap());
         } else {
@@ -2650,6 +2661,7 @@
         let cvs = prCanvas();
         cvs.getContext("2d").imageSmoothingEnabled = false;
         cvs.style.imageRendering = 'pixelated';
+
     }
 
     if (!window.saveProcgenCanvas) {
