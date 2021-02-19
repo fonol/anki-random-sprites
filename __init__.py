@@ -310,6 +310,7 @@ document.body.append(Object.assign(document.createElement('script'),{ src:"_proc
         lbl_3.setStyleSheet("border: 3px solid #2496dc;")
         layout.addWidget(lbl_3)
         te_2 = QTextEdit()
+        te_2.setFont(font)
         te_2.setPlainText("""<div id='procgen_canvas'></div>
 
 {{Front}}
