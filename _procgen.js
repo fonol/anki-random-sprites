@@ -368,326 +368,9 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0]]
     );
-    
-    const heads = [];
 
-    heads.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1, 1],
-        [0, 0, 0, 0, 0, 0, 4, 4, 4],
-        [0, 0, 0, 0, 1, 1, 4, 4, 4],
-        [0, 0, 0, 0, 0, 1, 4, 4, 4],
-        [0, 0, 0, 0, 0, 0, 4, 4, 4],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    heads.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 3, 3],
-        [0, 0, 0, 0, 5, 5, 3, 4, 4],
-        [0, 0, 0, 0, 5, 5, 3, 4, 4],
-        [0, 0, 0, 0, 0, 0, 3, 4, 4],
-        [0, 0, 0, 0, 0, 0, 0, 3, 3],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    heads.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 2, 2, 2],
-        [0, 0, 0, 0, 0, 0, 2, 2, 4],
-        [0, 0, 1, 0, 0, 0, 0, 2, 4],
-        [0, 0, 0, 0, 0, 0, 0, 2, 4],
-        [0, 1, 0, 0, 0, 0, 0, 2, 2],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    const torsos = [];
 
-    torsos.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 1, 1, 0, 1, 4],
-        [0, 0, 0, 1, 1, 4, 4, 4, 4],
-        [0, 0, 0, 1, 1, 0, 0, 4, 4],
-        [0, 0, 0, 1, 0, 0, 0, 1, 4],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    torsos.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 1, 1, 1, 0, 0, 4],
-        [0, 1, 4, 4, 4, 4, 4, 4, 4],
-        [0, 0, 1, 1, 1, 0, 0, 4, 4],
-        [0, 0, 0, 0, 0, 0, 0, 1, 4],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    torsos.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 4],
-        [0, 0, 0, 6, 3, 3, 3, 4, 4],
-        [0, 0, 0, 0, 0, 0, 0, 4, 4],
-        [0, 0, 0, 0, 0, 0, 0, 1, 4],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    torsos.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 5, 3],
-        [0, 0, 0, 0, 6, 3, 3, 3, 3],
-        [0, 0, 0, 0, 0, 0, 0, 5, 3],
-        [0, 0, 0, 0, 0, 0, 0, 0, 3],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    const eyes = [];
-    eyes.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 3, 3, 0],
-        [0, 0, 0, 0, 0, 3, 4, 4, 3],
-        [0, 0, 0, 0, 0, 3, 4, 4, 3],
-        [0, 0, 0, 0, 0, 0, 3, 3, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    eyes.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 3, 0],
-        [0, 5, 0, 0, 0, 0, 3, 4, 3],
-        [0, 0, 0, 0, 0, 0, 0, 3, 0],
-        [0, 0, 0, 5, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    eyes.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 5, 0, 0, 0, 0, 3, 0],
-        [0, 0, 0, 0, 0, 0, 3, 4, 3],
-        [0, 5, 0, 0, 0, 0, 0, 3, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 5, 0, 0],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    eyes.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 5, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 5, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    eyes.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 5, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 5, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    const feet = [];
-    feet.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1, 4],
-        [0, 0, 0, 0, 0, 0, 0, 1, 4],
-        [0, 0, 0, 0, 0, 1, 1, 1, 4],
-        [0, 0, 0, 0, 0, 1, 4, 4, 4],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
 
-    feet.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1, 4],
-        [0, 0, 0, 0, 0, 0, 0, 1, 4],
-        [0, 0, 0, 0, 0, 0, 0, 4, 4],
-        [0, 0, 0, 0, 0, 6, 4, 4, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-    feet.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 5, 0, 0, 0, 0, 0, 0, 3],
-        [0, 0, 5, 5, 0, 0, 0, 5, 3],
-        [0, 5, 0, 0, 0, 0, 5, 3, 5],
-        [0, 0, 0, 5, 5, 3, 3, 3, 5],
-        [5, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]);
-
-    const bugs = [];
-    bugs.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 5, 5, 5, 5],
-        [0, 0, 0, 0, 0, 5, 5, 5, 5],
-        [0, 0, 0, 0, 0, 5, 5, 5, 5],
-        [0, 0, 0, 0, 0, 5, 5, 5, 3],
-        [0, 0, 0, 0, 0, 5, 5, 3, 3],
-        [0, 0, 0, 0, 0, 5, 5, 5, 5],
-        [0, 0, 0, 0, 0, 5, 5, 5, 5],
-        [0, 0, 0, 0, 0, 5, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-    ]);
-    bugs.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 5, 5],
-        [0, 0, 0, 0, 5, 5, 5, 5, 5],
-        [0, 0, 0, 0, 5, 5, 5, 5, 5],
-        [0, 0, 0, 0, 5, 5, 5, 5, 5],
-        [0, 0, 0, 0, 5, 5, 5, 5, 5],
-        [0, 0, 0, 7, 5, 5, 5, 5, 5],
-        [0, 0, 0, 0, 5, 5, 5, 5, 5],
-        [0, 0, 0, 0, 5, 5, 5, 5, 5],
-        [0, 0, 0, 0, 5, 5, 5, 5, 5],
-        [0, 0, 0, 0, 5, 5, 5, 5, 5],
-        [0, 0, 0, 0, 0, 0, 0, 5, 5],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-    ]);
-    bugs.push([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 5, 5, 5, 0, 0, 5, 5],
-        [0, 0, 5, 5, 5, 5, 5, 5, 5],
-        [0, 0, 5, 5, 5, 5, 5, 5, 5],
-        [0, 0, 0, 5, 5, 5, 5, 5, 5],
-        [0, 0, 0, 5, 5, 5, 5, 7, 5],
-        [0, 0, 0, 5, 7, 5, 5, 7, 5],
-        [0, 0, 0, 5, 5, 5, 5, 7, 5],
-        [0, 0, 0, 5, 5, 5, 5, 5, 5],
-        [0, 0, 0, 5, 5, 5, 5, 5, 5],
-        [0, 0, 5, 5, 5, 5, 5, 5, 5],
-        [0, 0, 5, 5, 5, 0, 0, 5, 5],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-    ]);
-  
     class PMapTemplate {
         constructor(template, steps) {
             this.template = template;
@@ -785,6 +468,9 @@
             this.mapRBGValues = [];
 
             this.initialRGBValues();
+
+            this.baseEffects = [];
+            this.setupBaseEffects();
         }
 
         initialRGBValues() {
@@ -846,26 +532,14 @@
             const scale_sqrt = Math.round(Math.sqrt(SCALE));
 
             let map = this.scaledMap(this.mapRBGValues, scale_sqrt);
-            const baseEffectDice = 7;
+            const baseEffectDice = Math.max(1, Math.trunc(this.baseEffects.length / 2) - 2);
 
             if (effects) {
                 let actions = [];
-                if (roll(baseEffectDice)) { actions.push(this.distort_1.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.distort_2.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.distort_4.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.distort_5.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.distort_6.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.distort_7.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.distort_8.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.averageColors.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.gradient.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.invertColors.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.canvasTexture.bind(this)); }
-                if (roll(6)) { actions.push(this.smoothenEdges.bind(this)); }
-                if (roll(6)) { actions.push(this.edgeInterpolate.bind(this)); }
-                if (roll(6)) { actions.push(this.replaceBlack.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.pattern_1.bind(this)); }
-                if (roll(baseEffectDice)) { actions.push(this.pattern_2.bind(this)); }
+                for (var i = 0; i < this.baseEffects.length; i++) {
+                    if (roll(baseEffectDice)) { actions.push(this.baseEffects[i]); }
+                }
+
                 while (actions.length) {
                     let ix = _randInt(0, actions.length);
                     map = actions[ix](map);
@@ -899,9 +573,9 @@
                 let x = Math.trunc(canvas.width / 2);
                 let y = Math.trunc(canvas.height / 2);
                 ctx.globalCompositeOperation = 'destination-in'
-                ctx.arc(x, y, radius, 0, Math.PI*2, true);
+                ctx.arc(x, y, radius, 0, Math.PI * 2, true);
                 ctx.fill();
-            } 
+            }
 
         }
 
@@ -921,469 +595,471 @@
             }
             return enlarged;
         }
-        smoothenEdges(map) {
-            let updated = copyRGBMap(map);
-            const rounds = 3;
 
-            for (var round = 0; round < rounds; round++) {
-                let m = copyRGBMap(updated);
-                for (var row = 0; row < m.length; row++) {
-                    for (var col = 0; col < m[row].length; col++) {
-                        updated[row][col] = this.mostCommonColorAround(m, row, col);
-                    }
-                }
-            }
-            return updated;
-        }
-        distort_1(map) {
-            let updated = copyRGBMap(map);
-            const rounds = _randInt(1, 15);
-            const r4 = _randInt(0, 4);
-            const r3 = _randInt(0, 3);
-            const r2 = _randInt(0, 2);
-            for (var round = 0; round < rounds; round++) {
-                let m = copyRGBMap(updated);
-                for (var row = 0; row < m.length; row++) {
-                    for (var col = 0; col < m[row].length; col++) {
-                        let ca = this.colorsAround(m, row, col);
-                        if (ca.length === 2) {
-                            updated[row][col] = ca[r2]
-                        } else if (ca.length === 3) {
-                            updated[row][col] = ca[r3];
-                        } else if (ca.length === 4) {
-                            updated[row][col] = ca[r4];
-                        }
-                    }
-                }
-            }
-            return updated;
-        }
-        distort_2(map) {
-            let updated = copyRGBMap(map);
-            const rounds = 4;
 
-            for (var round = 0; round < rounds; round++) {
-                let m = copyRGBMap(updated);
-                for (var row = 0; row < m.length; row++) {
-                    for (var col = 0; col < m[row].length; col++) {
-                        if (this.isEmpty(m[row][col])) {
-                            continue;
-                        }
-                        let ca = this.colorsAround(m, row, col, false);
-                        if (ca.length < 4) {
-                            updated[row][col] = roll(1) ? [0, 0, 0, 0] : updated[row][col];
-                        }
-                    }
-                }
-            }
-            return updated;
-        }
-        distort_3(map) {
-            let updated = copyRGBMap(map);
-            const rounds = _randInt(5, 45);
-            const r1 = _randInt(2, 4);
-
-            for (var round = 0; round < rounds; round++) {
-                let m = copyRGBMap(updated);
-                for (var row = 0; row < m.length; row++) {
-                    for (var col = 0; col < m[row].length; col++) {
-                        if (this.isEmpty(m[row][col])) {
-                            continue;
-                        }
-                        let ca = this.colorsAround(m, row, col, false);
-                        if (ca.length < 4) {
-                            updated[row][col] = row % r1 === 0 ? [0, 0, 0, 0] : updated[row][col];
-                        }
-                    }
-                }
-            }
-            return updated;
-        }
-        distort_4(map) {
-            let updated = copyRGBMap(map);
-            const rounds = _randInt(1, 10);
-
-            for (var round = 0; round < rounds; round++) {
-                let m = copyRGBMap(updated);
-                for (var row = 0; row < m.length; row++) {
-                    for (var col = 0; col < m[row].length; col++) {
-                        if (this.isEmpty(m[row][col])) {
-                            continue;
-                        }
-                        let ca = this.countColorsAround(m, row, col, true);
-                        if (ca > 1) {
-                            updated[row][col] = darkenRGBA(m[row][col], 20);
-                        }
-                    }
-                }
-            }
-            return updated;
-        }
-        distort_5(map) {
-            let updated = copyRGBMap(map);
-            let r = _getRandomColors(1)[0];
-            for (var row = 0; row < map.length; row++) {
-                for (var col = 0; col < map[row].length; col++) {
-                    if (this.isEmpty(map[row][col])) { continue; }
-                    let ca = this.countColorsAround(map, row, col, true);
-                    if (ca === 1) {
-                        updated[row][col] = r;
-                    } else if (ca === 3)
-                        updated[row][col] = [0, 0, 0, 0];
-                }
-            }
-            return updated;
-        }
-        distort_6(map) {
-            let updated = copyRGBMap(map);
-            let r = _getRandomColors(1)[0];
-            for (var row = 0; row < map.length; row++) {
-                for (var col = 0; col < map[row].length; col++) {
-                    if (this.isEmpty(map[row][col])) { continue; }
-                    if (this.hasDifferentColorAround(map, row, col)) {
-                        updated[row][col] = r;
-                    } else {
-                        updated[row][col] = [0, 0, 0, 0];
-                    }
-                }
-            }
-            return updated;
-        }
-        distort_7(map) {
-            let updated = copyRGBMap(map);
-            let r = _getRandomColors(20);
-            for (var round = 0; round < 1; round++) {
-                for (var row = 0; row < map.length; row++) {
-                    for (var col = 0; col < map[row].length; col++) {
-                        if (this.isEmptyOrMapEdge(map, row, col)) { continue; }
-                        let ca = smallestDistanceToEmptyPixel(map, row, col);
-                        if (ca > 0 && ca < r.length - 1) {
-                            updated[row][col] = r[ca].slice();
-                        }
-                    }
-                }
-            }
-            return updated;
-        }
-        distort_8(map) {
-            let updated = copyRGBMap(map);
-            let r = _getRandomColors(1)[0];
-            for (var row = 0; row < map.length; row++) {
-                for (var col = 0; col < map[row].length; col++) {
-                    if (this.isEmptyOrMapEdge(map, row, col)) { continue; }
-                    let ca = smallestDistanceToEmptyPixel(map, row, col);
-                    if (ca === 10) {
-                        updated[row][col] = r;
-                    } else if (ca === 2 || ca === 5 || ca === 8)
-                        updated[row][col] = [0, 0, 0, 0];
-                }
-            }
-            return updated;
-        }
-        movePixels(map) {
-            let updated = copyRGBMap(map);
-            const rounds = _randInt(1, 25);
-
-            for (var round = 0; round < rounds; round++) {
-                let m = copyRGBMap(updated);
-                for (var row = 0; row < m.length; row++) {
-                    for (var col = 0; col < m[row].length; col++) {
-                        if (_randInt(0, 4) === 0) {
-                            let ca = this.colorsAround(m, row, col, true);
-                            if (ca.length) {
-                                updated[row][col] = ca[_randInt(0, ca.length)];
+        setupBaseEffects() {
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                const rounds = _randInt(1, 15);
+                const r4 = _randInt(0, 4);
+                const r3 = _randInt(0, 3);
+                const r2 = _randInt(0, 2);
+                for (var round = 0; round < rounds; round++) {
+                    let m = copyRGBMap(updated);
+                    for (var row = 0; row < m.length; row++) {
+                        for (var col = 0; col < m[row].length; col++) {
+                            let ca = colorsAround(m, row, col);
+                            if (ca.length === 2) {
+                                updated[row][col] = ca[r2]
+                            } else if (ca.length === 3) {
+                                updated[row][col] = ca[r3];
+                            } else if (ca.length === 4) {
+                                updated[row][col] = ca[r4];
                             }
                         }
                     }
                 }
-            }
-            return updated;
-        }
-        averageColors(map) {
-            let updated = copyRGBMap(map);
-            let last = null;
-            let m = copyRGBMap(updated);
-            let r = _randInt(2, 5);
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                const rounds = 4;
 
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0) {
-                        if (last) {
-                            updated[row][col] = last;
+                for (var round = 0; round < rounds; round++) {
+                    let m = copyRGBMap(updated);
+                    for (var row = 0; row < m.length; row++) {
+                        for (var col = 0; col < m[row].length; col++) {
+                            if (cellEmpty(m[row][col])) {
+                                continue;
+                            }
+                            let ca = colorsAround(m, row, col, false);
+                            if (ca.length < 4) {
+                                updated[row][col] = roll(1) ? [0, 0, 0, 0] : updated[row][col];
+                            }
                         }
-                        if (roll(r)) {
-                            last = this.averageColor(this.colorsAround(m, row, col));
+                    }
+                }
+                return updated;
+            });
+
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                const rounds = _randInt(5, 45);
+                const r1 = _randInt(2, 4);
+
+                for (var round = 0; round < rounds; round++) {
+                    let m = copyRGBMap(updated);
+                    for (var row = 0; row < m.length; row++) {
+                        for (var col = 0; col < m[row].length; col++) {
+                            if (cellEmpty(m[row][col])) {
+                                continue;
+                            }
+                            let ca = colorsAround(m, row, col, false);
+                            if (ca.length < 4) {
+                                updated[row][col] = row % r1 === 0 ? [0, 0, 0, 0] : updated[row][col];
+                            }
                         }
                     }
                 }
-            }
-            return updated;
-        }
-        gradient(map) {
-            let updated = copyRGBMap(map);
-            let c = null;
-            let m = copyRGBMap(updated);
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                const rounds = _randInt(1, 10);
 
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0) {
-                        c = m[row][col];
-                        let diff = smallestDistanceToEmptyPixel(m, row, col);
-                        if (diff !== -1) {
-                            for (var i = 0; i < 10 - diff; i++)
-                                c = darkenRGBA(c, 15);
+                for (var round = 0; round < rounds; round++) {
+                    let m = copyRGBMap(updated);
+                    for (var row = 0; row < m.length; row++) {
+                        for (var col = 0; col < m[row].length; col++) {
+                            if (cellEmpty(m[row][col])) {
+                                continue;
+                            }
+                            let ca = countColorsAround(m, row, col, true);
+                            if (ca > 1) {
+                                updated[row][col] = darkenRGBA(m[row][col], 20);
+                            }
                         }
-                        updated[row][col] = c;
                     }
                 }
-            }
-            return updated;
-        }
-        gradientFancy(map) {
-            let updated = copyRGBMap(map);
-            let c = null;
-            let m = copyRGBMap(updated);
-            let rc_0 = [_randInt(150, 200), _randInt(150, 200), _randInt(150, 200), 255];
-            let rc_1 = [_randInt(150, 200), _randInt(150, 200), _randInt(150, 200), 255];
-
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0) {
-                        c = m[row][col][0] > 150 == 0 ? rc_0 : rc_1;
-                        let diff = smallestDistanceToEmptyPixel(m, row, col);
-                        if (diff !== -1) {
-                            for (var i = 0; i < Math.max(1, 20 - diff); i++)
-                                c = darkenRGBA(c, Math.min(row, m.length - row, col, m[0].length - col));
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let r = _getRandomColors(1)[0];
+                for (var row = 0; row < map.length; row++) {
+                    for (var col = 0; col < map[row].length; col++) {
+                        if (cellEmpty(map[row][col])) { continue; }
+                        let ca = countColorsAround(map, row, col, true);
+                        if (ca === 1) {
+                            updated[row][col] = r;
+                        } else if (ca === 3)
+                            updated[row][col] = [0, 0, 0, 0];
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let r = _getRandomColors(1)[0];
+                for (var row = 0; row < map.length; row++) {
+                    for (var col = 0; col < map[row].length; col++) {
+                        if (cellEmpty(map[row][col])) { continue; }
+                        if (hasDifferentColorAround(map, row, col)) {
+                            updated[row][col] = r;
+                        } else {
+                            updated[row][col] = [0, 0, 0, 0];
                         }
-                        updated[row][col] = c;
                     }
                 }
-            }
-            return updated;
-        }
-        gradientPointed(map) {
-            let updated = copyRGBMap(map);
-            let c = null;
-            let m = copyRGBMap(updated);
-            let rp = _randInt(0, map.length);
-            let cp = _randInt(0, map[0].length);
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0) {
-                        c = m[row][col];
-                        for (var i = 0; i < Math.trunc(Math.sqrt(Math.pow(rp - row, 2) + Math.pow(cp - col, 2))); i++)
-                            c = darkenRGBA(c, 3);
-                        updated[row][col] = c;
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let r = _getRandomColors(20);
+                for (var round = 0; round < 1; round++) {
+                    for (var row = 0; row < map.length; row++) {
+                        for (var col = 0; col < map[row].length; col++) {
+                            if (isEmptyOrMapEdge(map, row, col)) { continue; }
+                            let ca = smallestDistanceToEmptyPixel(map, row, col);
+                            if (ca > 0 && ca < r.length - 1) {
+                                updated[row][col] = r[ca].slice();
+                            }
+                        }
                     }
                 }
-            }
-            return updated;
-        }
-        canvasTexture(map) {
-            let updated = copyRGBMap(map);
-            let c = null;
-            let m = copyRGBMap(updated);
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let r = _getRandomColors(1)[0];
+                for (var row = 0; row < map.length; row++) {
+                    for (var col = 0; col < map[row].length; col++) {
+                        if (isEmptyOrMapEdge(map, row, col)) { continue; }
+                        let ca = smallestDistanceToEmptyPixel(map, row, col);
+                        if (ca === 10) {
+                            updated[row][col] = r;
+                        } else if (ca === 2 || ca === 5 || ca === 8)
+                            updated[row][col] = [0, 0, 0, 0];
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                for (var row = 0; row < map.length; row++) {
+                    for (var col = 0; col < map[row].length; col++) {
+                        if (cellEmpty(map[row][col])) { continue; }
+                        let ca = countColorsAround(map, row, col, true);
+                        if (ca === 2 && row > 0) {
+                            updated[row][col] = updated[row - 1][col];
+                        } else if (Math.trunc(row / (col + 1)) % 3 == 0 && col > 1)
+                            updated[row][col] = updated[row][col - 2];
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                for (var row = 0; row < map.length; row++) {
+                    for (var col = 0; col < map[row].length; col++) {
+                        if (cellEmpty(map[row][col])) { continue; }
+                        let ca = countColorsAround(map, row, col, true);
+                        if (ca === 2 && row > 0) {
+                            updated[row][col] = updated[row - 1][col];
+                        } else if (Math.trunc(row / (col + 1)) % 3 == 0 && col > 0)
+                            updated[row][col] = updated[row][col - 1];
+                    }
+                }
+                return updated;
 
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0) {
-                        c = m[row][col];
-                        for (var i = 0; i < _randInt(1, 15); i++)
-                            if (row % 2 === 0)
-                                c = darkenRGBA(c, 5);
-                            else
-                                c = darkenRGBA(c, -5);
-                        updated[row][col] = c;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                for (var row = 0; row < map.length; row++) {
+                    for (var col = 0; col < map[row].length; col++) {
+                        if (cellEmpty(map[row][col])) { continue; }
+                        let ca = countColorsAround(map, row, col, true);
+                        if (ca === 2 && row > 0) {
+                            updated[row][col] = updated[row - 1][col];
+                        } else if (ca === 3 && col > 0)
+                            updated[row][col] = updated[row][col - 1];
                     }
                 }
-            }
-            return updated;
-        }
-        pattern_1(map) {
-            let updated = copyRGBMap(map);
-            let c = null;
-            let m = copyRGBMap(updated);
-            let rc = _getRandomColors(1)[0];
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let r = _getRandomColors(1)[0];
+                for (var row = 0; row < map.length; row++) {
+                    for (var col = 0; col < map[row].length; col++) {
+                        if (cellEmpty(map[row][col])) { continue; }
+                        let ca = countColorsAround(map, row, col, true);
+                        if (ca === 2 && row > 0) {
+                            updated[row][col] = updated[row - 1][col];
+                        } else if (ca === 3)
+                            updated[row][col] = [r[0], r[1], r[2], 255];
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let last = null;
+                let m = copyRGBMap(updated);
+                let r = _randInt(2, 5);
 
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0) {
-                        c = m[row][col];
-                        if ((row === m.length - 1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length - 1 || colorsAreEqual(c, m[row][col + 1]))) {
+                for (var row = 0; row < m.length; row++) {
+                    for (var col = 0; col < m[row].length; col++) {
+                        if (m[row][col][3] !== 0) {
+                            if (last) {
+                                updated[row][col] = last;
+                            }
+                            if (roll(r)) {
+                                last = averageColor(colorsAround(m, row, col));
+                            }
+                        }
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let c = null;
+                let m = copyRGBMap(updated);
+
+                for (var row = 0; row < m.length; row++) {
+                    for (var col = 0; col < m[row].length; col++) {
+                        if (m[row][col][3] !== 0) {
+                            c = m[row][col];
+                            let diff = smallestDistanceToEmptyPixel(m, row, col);
+                            if (diff !== -1) {
+                                for (var i = 0; i < 10 - diff; i++)
+                                    c = darkenRGBA(c, 15);
+                            }
+                            updated[row][col] = c;
+                        }
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let m = copyRGBMap(updated);
+
+                for (var row = 0; row < m.length; row++) {
+                    for (var col = 0; col < m[row].length; col++) {
+                        if (m[row][col][3] !== 0) {
+                            updated[row][col] = invertRGBA(m[row][col]);
+                        }
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let m = copyRGBMap(updated);
+
+                for (var row = 0; row < m.length; row++) {
+                    for (var col = 0; col < m[row].length; col++) {
+                        updated[row][col] = edgeInterpolate(m, row, col);
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let c = null;
+                let m = copyRGBMap(updated);
+
+                for (var row = 0; row < m.length; row++) {
+                    for (var col = 0; col < m[row].length; col++) {
+                        if (m[row][col][3] !== 0) {
+                            c = m[row][col];
+                            for (var i = 0; i < _randInt(1, 15); i++)
+                                if (row % 2 === 0)
+                                    c = darkenRGBA(c, 5);
+                                else
+                                    c = darkenRGBA(c, -5);
+                            updated[row][col] = c;
+                        }
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let c = null;
+                let m = copyRGBMap(updated);
+                let rc = _getRandomColors(1)[0];
+
+                for (var row = 0; row < m.length; row++) {
+                    for (var col = 0; col < m[row].length; col++) {
+                        if (m[row][col][3] !== 0) {
+                            c = m[row][col];
+                            if ((row === m.length - 1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length - 1 || colorsAreEqual(c, m[row][col + 1]))) {
+                                updated[row][col] = rc;
+                            }
+                        }
+                    }
+                }
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                let m = copyRGBMap(updated);
+                let rc = _getRandomColors(1)[0];
+
+                for (var row = 0; row < m.length; row++) {
+                    for (var col = 0; col < m[row].length; col++) {
+                        if (m[row][col][3] !== 0 && m[row][col][0] === 0 && m[row][col][1] === 0 && m[row][col][2] === 0) {
                             updated[row][col] = rc;
                         }
                     }
                 }
-            }
-            return updated;
-        }
-        pattern_2(map) {
-            let c = null;
-            let m = copyRGBMap(map);
-            let rc = _getRandomColors(1)[0];
+                return updated;
+            });
+            this.baseEffects.push(function (map) {
+                let c = null;
+                let m = copyRGBMap(map);
+                let rc = _getRandomColors(1)[0];
 
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0) {
-                        c = m[row][col];
-                        if ((row === m.length - 1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length - 1 || colorsAreEqual(c, m[row][col + 1]))) {
-                            m[row][col] = rc;
+                for (var row = 0; row < m.length; row++) {
+                    for (var col = 0; col < m[row].length; col++) {
+                        if (m[row][col][3] !== 0) {
+                            c = m[row][col];
+                            if ((row === m.length - 1 || colorsAreEqual(c, m[row + 1][col])) && (row === 0 || colorsAreEqual(c, m[row - 1][col])) && (col === 0 || colorsAreEqual(c, m[row][col - 1])) && (col === m[0].length - 1 || colorsAreEqual(c, m[row][col + 1]))) {
+                                m[row][col] = rc;
+                            }
                         }
                     }
                 }
-            }
-            return m;
-        }
-        pattern_3(map) {
-            let m = copyRGBMap(map);
-            let rc = _getRandomColors(1)[0];
+                return m;
+            });
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                const rounds = 3;
 
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0) {
-                        let ca = this.countColorsAround(map, row, col);
-                        if (ca > 1 && ca < 4) {
-                            m[row][col] = rc;
+                for (var round = 0; round < rounds; round++) {
+                    let m = copyRGBMap(updated);
+                    for (var row = 0; row < m.length; row++) {
+                        for (var col = 0; col < m[row].length; col++) {
+                            updated[row][col] = mostCommonColorAround(m, row, col);
                         }
                     }
                 }
-            }
-            return m;
-        }
-        replaceBlack(map) {
-            let updated = copyRGBMap(map);
-            let m = copyRGBMap(updated);
-            let rc = _getRandomColors(1)[0];
+                return updated;
+            });
 
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0 && m[row][col][0] === 0 && m[row][col][1] === 0 && m[row][col][2] === 0) {
-                        updated[row][col] = rc;
+            this.baseEffects.push(function (map) {
+                let updated = copyRGBMap(map);
+                for (var row = 0; row < updated.length; row++) {
+                    for (var col = 0; col < updated[row].length / 2; col++) {
+                        updated[row][col] = updated[row][updated[row].length - col - 1];
                     }
                 }
-            }
-            return updated;
-        }
-        invertColors(map) {
-            let updated = copyRGBMap(map);
-            let m = copyRGBMap(updated);
-
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    if (m[row][col][3] !== 0) {
-                        updated[row][col] = invertRGBA(m[row][col]);
+                for (var row = 0; row <= updated.length / 2; row++) {
+                    for (var col = 0; col < updated[row].length; col++) {
+                        updated[row][col] = updated[updated.length - row - 1][col];
                     }
                 }
-            }
-            return updated;
-        }
-        edgeInterpolate(map) {
-            let updated = copyRGBMap(map);
-            let m = copyRGBMap(updated);
-
-            for (var row = 0; row < m.length; row++) {
-                for (var col = 0; col < m[row].length; col++) {
-                    updated[row][col] = edgeInterpolate(m, row, col);
-                }
-            }
-            return updated;
+                return updated;
+            });
         }
 
-        colorsAround(map, row, col, includeEmpty = false) {
-            let c = [];
-            if (row - 1 >= 0 && (includeEmpty || !this.isEmpty(map[row - 1][col]))) {
-                c.push(map[row - 1][col]);
-            }
-            if (row + 1 < map.length && (includeEmpty || !this.isEmpty(map[row + 1][col]))) {
-                c.push(map[row + 1][col]);
-            }
-            if (col - 1 >= 0 && (includeEmpty || !this.isEmpty(map[row][col - 1]))) {
-                c.push(map[row][col - 1]);
-            }
-            if (col + 1 < map[0].length && (includeEmpty || !this.isEmpty(map[row][col + 1]))) {
-                c.push(map[row][col + 1]);
-            }
-            return c;
+    }
+    function mostCommonColorAround(map, row, col) {
+        let c = {};
+        if (row - 1 >= 0) {
+            c[map[row - 1][col]] = c[map[row - 1][col]] + 1 || 1;
         }
-        countColorsAround(map, row, col, includeEmpty = false) {
-            let c = [];
-            if (row - 1 >= 0 && c.indexOf(map[row - 1][col].toString()) === -1 && (includeEmpty || !this.isEmpty(map[row - 1][col]))) {
-                c.push(map[row - 1][col].toString());
-            }
-            if (row + 1 < map.length && c.indexOf(map[row + 1][col].toString()) === -1 && (includeEmpty || !this.isEmpty(map[row + 1][col]))) {
-                c.push(map[row + 1][col].toString());
-            }
-            if (col - 1 >= 0 && c.indexOf(map[row][col - 1].toString()) === -1 && (includeEmpty || !this.isEmpty(map[row][col - 1]))) {
-                c.push(map[row][col - 1].toString());
-            }
-            if (col + 1 < map[0].length && c.indexOf(map[row][col + 1].toString()) === -1 && (includeEmpty || !this.isEmpty(map[row][col + 1]))) {
-                c.push(map[row][col + 1].toString());
-            }
-            return c.length;
+        if (row + 1 < map.length) {
+            c[map[row + 1][col]] = c[map[row + 1][col]] + 1 || 1;
         }
-        hasDifferentColorAround(map, row, col) {
-            let c = map[row][col];
-            if (row - 1 < 0 || !colorsAreEqual(map[row - 1][col], c)) {
-                return true;
-            }
-            if (row + 1 >= map.length || !colorsAreEqual(map[row + 1][col], c)) {
-                return true;
-            }
-            if (col - 1 < 0 || !colorsAreEqual(map[row][col - 1], c)) {
-                return true;
-            }
-            if (col + 1 >= map[0].length || !colorsAreEqual(map[row][col + 1], c)) {
-                return true;
-            }
-            return false;
+        if (col - 1 >= 0) {
+            c[map[row][col - 1]] = c[map[row][col - 1]] + 1 || 1;
         }
-        averageColor(colors) {
-            let r = 0;
-            let g = 0;
-            let b = 0;
-            for (var i = 0; i < colors.length; i++) {
-                r += colors[i][0];
-                g += colors[i][1];
-                b += colors[i][2];
-            }
-            return [Math.round(r / colors.length), Math.round(g / colors.length), Math.round(b / colors.length), 255];
+        if (col + 1 < map[0].length) {
+            c[map[row][col + 1]] = c[map[row][col + 1]] + 1 || 1;
         }
-        isEmpty(cell) {
-            return cell[0] === 0 && cell[1] === 0 && cell[2] === 0 && cell[3] === 0;
+        let highest = -1;
+        let chosen = [];
+        for (var [color, count] of Object.entries(c)) {
+            if (count > highest) {
+                highest = count;
+                chosen = [color];
+            } else if (count == highest) {
+                chosen.push(color);
+            }
         }
-        isEmptyOrMapEdge(map, row, col) {
-            return this.isEmpty(map[row][col]) || row === 0 || col === 0 || row === map.length - 1 || col === map[0].length - 1;
+        if (highest === 3) {
+            return averageColor(chosen.map(x => x.split(",").map(function (cs) { return Number(cs); })))
         }
-        mostCommonColorAround(map, row, col) {
-            let c = {};
-            if (row - 1 >= 0) {
-                c[map[row - 1][col]] = c[map[row - 1][col]] + 1 || 1;
-            }
-            if (row + 1 < map.length) {
-                c[map[row + 1][col]] = c[map[row + 1][col]] + 1 || 1;
-            }
-            if (col - 1 >= 0) {
-                c[map[row][col - 1]] = c[map[row][col - 1]] + 1 || 1;
-            }
-            if (col + 1 < map[0].length) {
-                c[map[row][col + 1]] = c[map[row][col + 1]] + 1 || 1;
-            }
-            let highest = -1;
-            let chosen = [];
-            for (var [color, count] of Object.entries(c)) {
-                if (count > highest) {
-                    highest = count;
-                    chosen = [color];
-                } else if (count == highest) {
-                    chosen.push(color);
-                }
-            }
-            if (highest === 3) {
-                return this.averageColor(chosen.map(x => x.split(",").map(function (cs) { return Number(cs); })))
-            }
-            return chosen[0].split(",").map(function (cs) { return Number(cs); });
+        return chosen[0].split(",").map(function (cs) { return Number(cs); });
+    }
+    function hasDifferentColorAround(map, row, col) {
+        let c = map[row][col];
+        if (row - 1 < 0 || !colorsAreEqual(map[row - 1][col], c)) {
+            return true;
         }
-
+        if (row + 1 >= map.length || !colorsAreEqual(map[row + 1][col], c)) {
+            return true;
+        }
+        if (col - 1 < 0 || !colorsAreEqual(map[row][col - 1], c)) {
+            return true;
+        }
+        if (col + 1 >= map[0].length || !colorsAreEqual(map[row][col + 1], c)) {
+            return true;
+        }
+        return false;
+    }
+    function isEmptyOrMapEdge(map, row, col) {
+        return cellEmpty(map[row][col]) || row === 0 || col === 0 || row === map.length - 1 || col === map[0].length - 1;
+    }
+    function countColorsAround(map, row, col, includeEmpty = false) {
+        let c = [];
+        if (row - 1 >= 0 && c.indexOf(map[row - 1][col].toString()) === -1 && (includeEmpty || !cellEmpty(map[row - 1][col]))) {
+            c.push(map[row - 1][col].toString());
+        }
+        if (row + 1 < map.length && c.indexOf(map[row + 1][col].toString()) === -1 && (includeEmpty || !cellEmpty(map[row + 1][col]))) {
+            c.push(map[row + 1][col].toString());
+        }
+        if (col - 1 >= 0 && c.indexOf(map[row][col - 1].toString()) === -1 && (includeEmpty || !cellEmpty(map[row][col - 1]))) {
+            c.push(map[row][col - 1].toString());
+        }
+        if (col + 1 < map[0].length && c.indexOf(map[row][col + 1].toString()) === -1 && (includeEmpty || !cellEmpty(map[row][col + 1]))) {
+            c.push(map[row][col + 1].toString());
+        }
+        return c.length;
+    }
+    function cellEmpty(cell) {
+        return cell[0] === 0 && cell[1] === 0 && cell[2] === 0 && cell[3] === 0;
+    }
+    function colorsAround(map, row, col, includeEmpty = false) {
+        let c = [];
+        if (row - 1 >= 0 && (includeEmpty || !cellEmpty(map[row - 1][col]))) {
+            c.push(map[row - 1][col]);
+        }
+        if (row + 1 < map.length && (includeEmpty || !cellEmpty(map[row + 1][col]))) {
+            c.push(map[row + 1][col]);
+        }
+        if (col - 1 >= 0 && (includeEmpty || !cellEmpty(map[row][col - 1]))) {
+            c.push(map[row][col - 1]);
+        }
+        if (col + 1 < map[0].length && (includeEmpty || !cellEmpty(map[row][col + 1]))) {
+            c.push(map[row][col + 1]);
+        }
+        return c;
+    }
+    function averageColor(colors) {
+        let r = 0;
+        let g = 0;
+        let b = 0;
+        for (var i = 0; i < colors.length; i++) {
+            r += colors[i][0];
+            g += colors[i][1];
+            b += colors[i][2];
+        }
+        return [Math.round(r / colors.length), Math.round(g / colors.length), Math.round(b / colors.length), 255];
     }
     function colorsAreEqual(c1, c2) {
         return c2[3] === c1[3] && c2[2] === c1[2] && c2[1] === c1[1] && c2[0] === c1[0];
@@ -1491,20 +1167,8 @@
         }
 
         let maps = [];
-        let was_predef = false;
 
         if (roll(4)) {
-            was_predef = true;
-            predef.push(
-                [heads, torsos, feet, eyes], 
-                [bugs] 
-                );
-
-            let predef_pipeline = predef[_randInt(0, predef.length)];
-            for (var i = 0; i < predef_pipeline.length; i++) {
-                maps.push(new PMapTemplate(predef_pipeline[i][_randInt(0, predef_pipeline[i].length)], defaultSteps()).generateMap());
-            }
-        } else if (roll(3)) {
             let chosen = singles[_randInt(0, singles.length)];
             maps.push(chosen.generateMap());
         } else {
@@ -1517,7 +1181,7 @@
         }
 
         let fused = overlayAll(maps);
-        fused.printToCanvas(canvas, effects && !was_predef);
+        fused.printToCanvas(canvas, effects);
     }
 
     function copyRGBMap(map) {
@@ -1732,7 +1396,7 @@
         }
         context.putImageData(imageData, 0, 0);
     });
-    
+
     transformations.push((canvas) => {
         let context = canvas.getContext("2d");
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -1956,7 +1620,7 @@
             px_3 = _bottomleftPx(canvas, data, i / 4);
             if (px && px_2 && px_3 && px[0] == px_2[0] && Math.abs(px[0] - px_3[0]) % 3 == 0) {
                 newData[i] = (px_3[0] + 10) % 255;
-                newData[i + x ? i%3 : 1] = (px_3[0] + 4) % 255;
+                newData[i + x ? i % 3 : 1] = (px_3[0] + 4) % 255;
                 newData[i + 2] = (px[2] + px_2[2]) % 255;
             }
         }
@@ -1971,10 +1635,10 @@
         let px = null;
         for (var i = 0; i < data.length; i += 4) {
             px = _bottomPx(canvas, data, i / 4);
-            if (px  && data[i+3] > 10) {
+            if (px && data[i + 3] > 10) {
                 newData[i] = (px[0] + 4) % 255;
-                newData[i + 1] = (data[i+1] + 4) % 255;
-                newData[i + 2] = (data[i+2] + 4) % 255;
+                newData[i + 1] = (data[i + 1] + 4) % 255;
+                newData[i + 2] = (data[i + 2] + 4) % 255;
             }
         }
         context.putImageData(cimageData, 0, 0);
@@ -1988,8 +1652,8 @@
         let px = null, px_2 = null;
         for (var i = 0; i < data.length; i += 4) {
             px = _bottomPx(canvas, data, i / 4);
-            px_2 = _rightPx(canvas, data, i /4);
-            if (px && px_2  && data[i+3] > 10) {
+            px_2 = _rightPx(canvas, data, i / 4);
+            if (px && px_2 && data[i + 3] > 10) {
                 newData[i] = (px[0] + 4) % 255;
                 newData[i + 1] = (px_2[1] + 5) % 255;
                 newData[i + 2] = (px_2[2] + 6) % 255;
@@ -2222,7 +1886,7 @@
         if (non_empty)
             context.putImageData(imageData, 0, 0);
     });
-      transformations.push((canvas) => {
+    transformations.push((canvas) => {
         let context = canvas.getContext("2d");
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
@@ -2234,9 +1898,9 @@
             p = iter[i] * 4;
             diff = cv_hasDifferentColorAround(canvas, data, p / 4);
             if (diff) {
-                data[p+0] = (x * data[p+0] +100) % 255;
-                data[p+1] = (x * data[p+1] +100) % 255;
-                data[p+2] = (x * data[p+2] +100) % 255;
+                data[p + 0] = (x * data[p + 0] + 100) % 255;
+                data[p + 1] = (x * data[p + 1] + 100) % 255;
+                data[p + 2] = (x * data[p + 2] + 100) % 255;
             }
             if (!non_empty && data[p + 3] != 0)
                 non_empty = true;
@@ -2256,20 +1920,20 @@
         let lum = 0;
         for (var i = 0; i < iter.length; i++) {
             p = iter[i] * 4;
-            if (data[p+3] <= 0)
-            continue;
-            lum = (data[p] + data[p+1] + data[p+2]) * 255 / 765;
+            if (data[p + 3] <= 0)
+                continue;
+            lum = (data[p] + data[p + 1] + data[p + 2]) * 255 / 765;
             diff = cv_hasDifferentColorAround(canvas, data, p / 4);
             if (diff) {
                 if (y % 3 !== 0) {
-                    data[p+2] = Math.max(Math.min((lum - x), 255), 60);
-                    data[p+1] = Math.max(Math.min((lum - x), 255), 60);
-                    data[p+0] = Math.max(Math.min((lum - x), 255), 60);
+                    data[p + 2] = Math.max(Math.min((lum - x), 255), 60);
+                    data[p + 1] = Math.max(Math.min((lum - x), 255), 60);
+                    data[p + 0] = Math.max(Math.min((lum - x), 255), 60);
                 } else {
 
-                    data[p+2] = Math.max(Math.min((lum + x), 210), 10);
-                    data[p+1] = Math.max(Math.min((lum + x), 210), 10);
-                    data[p+0] = Math.max(Math.min((lum + x), 210), 10);
+                    data[p + 2] = Math.max(Math.min((lum + x), 210), 10);
+                    data[p + 1] = Math.max(Math.min((lum + x), 210), 10);
+                    data[p + 0] = Math.max(Math.min((lum + x), 210), 10);
                 }
             }
             if (!non_empty && data[p + 3] != 0)
@@ -2313,14 +1977,14 @@
         let data = imageData.data;
         let cimageData = copyImgData(imageData);
         let newData = cimageData.data;
-        let f = 1.04; 
+        let f = 1.04;
         if (roll(2))
-            f = 1.14; 
+            f = 1.14;
         for (var i = 0; i < data.length; i += 4) {
-            if (data[i+3] > 0 && !cv_hasDifferentColorAround(canvas, data, i / 4)) {
+            if (data[i + 3] > 0 && !cv_hasDifferentColorAround(canvas, data, i / 4)) {
                 newData[i] = Math.max(0, Math.min(255, Math.trunc(data[i] * f)));
-                newData[i+1] = Math.max(0, Math.min(255, Math.trunc(data[i+1] * f)));
-                newData[i+2] = Math.max(0, Math.min(255, Math.trunc(data[i+2] * f)));
+                newData[i + 1] = Math.max(0, Math.min(255, Math.trunc(data[i + 1] * f)));
+                newData[i + 2] = Math.max(0, Math.min(255, Math.trunc(data[i + 2] * f)));
             }
         }
         if (roll(7)) {
@@ -2328,7 +1992,7 @@
         }
         context.putImageData(cimageData, 0, 0);
     });
-   
+
 
     function _bottomPx(canvas, data, ix) {
         if (data.length - ix <= canvas.width) {
@@ -2568,7 +2232,7 @@
         let s = performance.now();
         let c = prCanvas();
         if (!c) { return; }
-        window.prTransformationCount ++;
+        window.prTransformationCount++;
         for (var i = 0; i < window.prTransformations.length; i++) {
             window.prTransformations[i](c);
         }
@@ -2675,7 +2339,7 @@
     let canvases = document.getElementsByClassName("px_canvas");
     for (var i = 0; i < canvases.length; i++) {
         let c = canvases[i];
-        if ((typeof(window._procgen_dev) === "undefined" || !window._procgen_dev) && USE_RENDER_ANIMATION) {
+        if ((typeof (window._procgen_dev) === "undefined" || !window._procgen_dev) && USE_RENDER_ANIMATION) {
             genWithAnimation(c, 0);
         } else {
             generateRandom(c, true);
