@@ -224,13 +224,38 @@ class DemoTab(QWidget):
         self.refresh()
 
     def refresh(self):
-        script      = self.current_script()
+        script          = self.current_script()
+        config          = mw.addonManager.getConfig(__name__)         
+
+        use_animation   = config["use_render_animation"]
+        use_effect      = config["use_effect_animation"]
+        zoom            = int(config["zoom"] * 100)
         self.web.setHtml(f"""
-            <style>* {{ background: beige; }}</style>
+            <style>body {{ background: beige; font-family: Verdana,Palatino,Garamond;}}</style>
             <div id='procgen_canvas' style='margin-top: 40px; margin-bottom: 40px;'></div>
             <div style='text-align: center;'><b>Question?</b></div>
-            <hr>
+            <hr style='margin: 30px;'/>
             <div style='text-align: center;'><b>Answer!</b></div>
+
+            <div style='margin-top: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 14px;'>
+
+                <div>Settings</div>
+                <table style='margin-top: 10px; font-size: 12px;'>
+                    <tr>
+                        <td>Use render animation</td>
+                        <td>{use_animation}</td>
+                    </tr>
+                    <tr>
+                        <td>Random animated effects</td>
+                        <td>{use_effect}</td>
+                    </tr>
+                    <tr>
+                        <td>Size of rendered image</td>
+                        <td>{zoom}%</td>
+                    </tr>
+                </table>
+            </div>
+
             <script>
                 {script}
             </script>
@@ -244,6 +269,9 @@ class InfoTab(QWidget):
         self.setup_ui()
 
     def setup_ui(self):
+
+        font = QFont()
+        font.setPointSize(10)
 
         layout = QVBoxLayout()
         s_lbl = QLabel("<b>How to setup:</b>")
@@ -271,12 +299,11 @@ after you answered a card.
         te_1 = QTextEdit()
         te_1.setPlainText("""<script>
 document.body.append(Object.assign(document.createElement('script'),{ src:"_procgen.js"}));
-</script>
-        """)
+</script>""")
         te_1.setReadOnly(True)
         te_1.setMaximumHeight(70)
+        te_1.setFont(font)
         layout.addWidget(te_1)
-        # te_1.setFixedHeight(te_1.document().size().toSize().height() + 5)
         layout.addSpacing(10)
 
         lbl_3 = QLabel("E.g. an example back side would look like:")
